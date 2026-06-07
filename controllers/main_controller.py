@@ -2,6 +2,7 @@ import os
 import sys
 import sqlite3
 import subprocess
+import shutil
 from tkinter import messagebox
 from models.ticket_model import Ticket
 from models.manuale_model import Problema, StepRisoluzione
@@ -250,24 +251,51 @@ class HelpDeskController:
             print(e)
 
     def aggiungi_guida_db(self):
-        """Inserisce un nuovo step creando il problema se non esiste o agganciandosi a uno esistente."""
+        """Inserisce un nuovo step copiando automaticamente l'immagine in assets se esterna."""
         admin_v = self.view.vista_admin
         
         categoria = admin_v.ent_categoria.get().strip()
         problema = admin_v.ent_problema.get().strip()
         step_num = admin_v.ent_step_num.get().strip()
         descrizione = admin_v.txt_descrizione.get("0.0", "end").strip()
-        path_media = admin_v.ent_path_media.get().strip()
+        path_media_originale = admin_v.ent_path_media.get().strip()
         
         if not categoria or not problema or not step_num or not descrizione:
             messagebox.showwarning("Attenzione", "Compila tutti i campi principali!")
             return
             
+        # --- GESTIONE AUTOMATICA COPIA IMMAGINE ---
+        path_media_finale = ""
+        if path_media_originale and os.path.exists(path_media_originale):
+            try:
+                # 1. Crea la cartella assets se per caso non esiste
+                os.makedirs("assets", exist_ok=True)
+                
+                # 2. Estrae solo il nome del file (es. da "C:/Scrivania/foto.png" a "foto.png")
+                nome_file = os.path.basename(path_media_originale)
+                path_destinazione = os.path.join("assets", nome_file)
+                
+                # Normalizziamo i percorsi per evitare falsi controlli differenti scritti male
+                assoluto_originale = os.path.abspath(path_media_originale)
+                assoluto_destinazione = os.path.abspath(path_destinazione)
+                
+                # 3. Se il file non è già dentro la cartella assets, lo copia fisicamente
+                if assoluto_originale != assoluto_destinazione:
+                    shutil.copy2(path_media_originale, path_destinazione)
+                
+                # Il percorso che salveremo nel database sarà sempre quello standard locale
+                path_media_finale = f"assets/{nome_file}"
+                
+            except Exception as e:
+                messagebox.showerror("Errore Media", f"Impossibile copiare l'immagine in assets: {e}")
+                return
+        
+        # --- SALVATAGGIO NEL DATABASE ---
         try:
             conn = self.ottieni_connessione()
             cursor = conn.cursor()
             
-            # 1. Controlla se il problema esiste già nella tabella dei macro-problemi
+            # 1. Controlla se il problema esiste già
             cursor.execute('''
                 SELECT id FROM manuale_problemi 
                 WHERE macro_categoria = ? AND titolo = ?
@@ -277,23 +305,22 @@ class HelpDeskController:
             if res:
                 id_problema = res[0]
             else:
-                # Altrimenti lo crea impostando temporaneamente la sottocategoria uguale alla macro
                 cursor.execute('''
                     INSERT INTO manuale_problemi (macro_categoria, sotto_categoria, titolo)
                     VALUES (?, ?, ?)
                 ''', (categoria, categoria, problema))
                 id_problema = cursor.lastrowid
             
-            # 2. Inserisce lo step associato al problema trovato o creato
+            # 2. Inserisce lo step usando il path_media_finale (es. assets/foto.png)
             cursor.execute('''
                 INSERT INTO manuale_steps (id_problema, numero_passo, testo, immagine_path, video_url)
                 VALUES (?, ?, ?, ?, ?)
-            ''', (id_problema, int(step_num), descrizione, path_media, ""))
+            ''', (id_problema, int(step_num), descrizione, path_media_finale, ""))
             
             conn.commit()
             conn.close()
             
-            messagebox.showinfo("Successo", "Nuovo step salvato correttamente!")
+            messagebox.showinfo("Successo", "Nuovo step e immagine salvati correttamente!")
             admin_v.svuota_form()
             self.carica_tabella_admin()
             self.view.vista_manuale.inizializza_manuale(self)
@@ -302,17 +329,65 @@ class HelpDeskController:
             messagebox.showerror("Errore", f"Impossibile aggiungere la guida: {e}")
 
     def modifica_guida_db(self):
-        """Aggiorna la descrizione o il percorso media dello step selezionato."""
+        """Aggiorna lo step, copia la nuova immagine in assets e pulisce la vecchia se inutilizzata."""
         admin_v = self.view.vista_admin
         if not admin_v.id_selezionato:
             messagebox.showwarning("Attenzione", "Seleziona prima uno step dalla tabella!")
             return
             
+        path_media_nuovo_input = admin_v.ent_path_media.get().strip()
+        
         try:
             conn = self.ottieni_connessione()
             cursor = conn.cursor()
             
-            # Aggiorna i dati testuali direttamente sullo step specifico usando l'ID univoco
+            # 1. Recuperiamo il percorso della VECCHIA immagine prima di fare qualsiasi modifica
+            cursor.execute("SELECT immagine_path FROM manuale_steps WHERE id = ?", (admin_v.id_selezionato,))
+            riga_vecchia = cursor.fetchone()
+            path_media_vecchio = riga_vecchia[0] if riga_vecchia else None
+            
+            # --- GESTIONE AUTOMATICA COPIA E PULIZIA IN MODIFICA ---
+            path_media_finale = ""
+            
+            if path_media_nuovo_input:
+                # Se l'utente ha inserito un percorso che esiste fisicamente sul disco (es. da Desktop)
+                if os.path.exists(path_media_nuovo_input):
+                    try:
+                        os.makedirs("assets", exist_ok=True)
+                        nome_file = os.path.basename(path_media_nuovo_input)
+                        path_destinazione = os.path.join("assets", nome_file)
+                        
+                        assoluto_originale = os.path.abspath(path_media_nuovo_input)
+                        assoluto_destinazione = os.path.abspath(path_destinazione)
+                        
+                        # Copia la nuova immagine solo se non si trova già dentro assets
+                        if assoluto_originale != assoluto_destinazione:
+                            shutil.copy2(path_media_nuovo_input, path_destinazione)
+                        
+                        path_media_finale = f"assets/{nome_file}"
+                    except Exception as e:
+                        messagebox.showerror("Errore Media", f"Impossibile copiare la nuova immagine in assets: {e}")
+                        conn.close()
+                        return
+                else:
+                    # Se l'utente non ha cambiato l'immagine (nel form c'è scritto ancora il vecchio 'assets/foto.png')
+                    path_media_finale = path_media_nuovo_input
+            
+            # 2. SE L'IMMAGINE È CAMBIATA, controlliamo se dobbiamo eliminare dal disco quella vecchia
+            if path_media_vecchio and path_media_vecchio != path_media_finale and path_media_vecchio.strip() != "":
+                # Chiediamo al DB quanti ALTRI step usano la vecchia immagine
+                cursor.execute("SELECT COUNT(*) FROM manuale_steps WHERE immagine_path = ? AND id != ?", 
+                               (path_media_vecchio, admin_v.id_selezionato))
+                conteggio_usi_vecchia = cursor.fetchone()[0]
+                
+                # Se nessun altro la usa ed esiste sul disco, la eliminiamo
+                if conteggio_usi_vecchia == 0 and os.path.exists(path_media_vecchio):
+                    try:
+                        os.remove(path_media_vecchio)
+                    except Exception as e:
+                        print(f"Impossibile rimuovere la vecchia immagine orfana {path_media_vecchio}: {e}")
+
+            # 3. Aggiorniamo i dati dello step nel Database
             cursor.execute('''
                 UPDATE manuale_steps 
                 SET numero_passo = ?, testo = ?, immagine_path = ?
@@ -320,22 +395,23 @@ class HelpDeskController:
             ''', (
                 int(admin_v.ent_step_num.get()), 
                 admin_v.txt_descrizione.get("0.0", "end").strip(), 
-                admin_v.ent_path_media.get(), 
+                path_media_finale, 
                 admin_v.id_selezionato
             ))
             
             conn.commit()
             conn.close()
             
-            messagebox.showinfo("Successo", "Modifiche salvate nel database!")
+            messagebox.showinfo("Successo", "Modifiche salvate e cartella assets ottimizzata!")
             admin_v.svuota_form()
             self.carica_tabella_admin()
             self.view.vista_manuale.inizializza_manuale(self)
+            
         except Exception as e:
             messagebox.showerror("Errore", f"Impossibile modificare lo step: {e}")
 
     def elimina_guida_db(self):
-        """Cancella permanentemente lo step selezionato dal database."""
+        """Cancella lo step dal DB e rimuove l'immagine da assets se non è usata da altre guide."""
         admin_v = self.view.vista_admin
         if not admin_v.id_selezionato:
             messagebox.showwarning("Attenzione", "Seleziona prima un elemento da eliminare!")
@@ -346,13 +422,34 @@ class HelpDeskController:
             try:
                 conn = self.ottieni_connessione()
                 cursor = conn.cursor()
+                
+                # 1. Recuperiamo il percorso dell'immagine associata a QUESTO step specifico
+                cursor.execute("SELECT immagine_path FROM manuale_steps WHERE id = ?", (admin_v.id_selezionato,))
+                riga = cursor.fetchone()
+                immagine_da_controllare = riga[0] if riga else None
+                
+                # 2. Eliminiamo lo step dal database
                 cursor.execute("DELETE FROM manuale_steps WHERE id = ?", (admin_v.id_selezionato,))
                 conn.commit()
+                
+                # 3. Se lo step aveva un'immagine, controlliamo se è usata da qualcun altro ORA
+                if immagine_da_controllare and immagine_da_controllare.strip() != "":
+                    cursor.execute("SELECT COUNT(*) FROM manuale_steps WHERE immagine_path = ?", (immagine_da_controllare,))
+                    conteggio_usi = cursor.fetchone()[0]
+                    
+                    # Se il conteggio è 0, significa che nessun'altra guida usa questa foto
+                    if conteggio_usi == 0 and os.path.exists(immagine_da_controllare):
+                        try:
+                            os.remove(immagine_da_controllare)
+                        except Exception as e:
+                            print(f"Impossibile eliminare il file fisico {immagine_da_controllare}: {e}")
+                
                 conn.close()
                 
-                messagebox.showinfo("Eliminato", "Step rimosso dal database.")
+                messagebox.showinfo("Eliminato", "Step rimosso dal database (e file multimediale ripulito se inutilizzato).")
                 admin_v.svuota_form()
                 self.carica_tabella_admin()
                 self.view.vista_manuale.inizializza_manuale(self)
+                
             except Exception as e:
-                messagebox.showerror("Errore", f"Impossibile eliminare: {e}")
+                messagebox.showerror("Errore", f"Impossibile eliminare lo step: {e}")
