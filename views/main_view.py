@@ -13,7 +13,7 @@ class HelpDeskView(ctk.CTk):
         super().__init__()
         
         # Impostazioni della finestra principale
-        self.title("Help Desk Aziendale - Portale Supporto")
+        self.title("HardwareHero - Help Desk per Assistenza Tecnica")
         self.geometry("850x650")
         
        
