@@ -174,22 +174,22 @@ class HelpDeskController:
         self.view.vista_ticket.txt_descrizione.delete("0.0", "end")
 
     def ripristina_driver_zebra(self):
-        if getattr(sys, 'frozen', False):
-            cartella_root = os.path.dirname(sys.executable)
-        else:
-            cartella_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        # Individua la cartella in cui si trova l'eseguibile/script
+        cartella_root = os.path.dirname(os.path.abspath(sys.argv[0]))
             
-        percorso_bat = os.path.join(cartella_root, "installa_zebra.bat")
+        # AGGIORNATO: Cambiato il nome del file in ZebraDriver.bat
+        percorso_bat = os.path.join(cartella_root, "ZebraDriver.bat") 
         
         if not os.path.exists(percorso_bat):
             messagebox.showerror("Errore", f"File '{percorso_bat}' non trovato!")
             return
             
         try:
+            # Avvia il file .bat forzando la richiesta di Amministratore (UAC) tramite PowerShell
             subprocess.Popen(["powershell", "-Command", f"Start-Process '{percorso_bat}' -Verb RunAs"], shell=True)
             messagebox.showinfo("Driver", "Script avviato. Accetta la richiesta UAC di Windows.")
         except Exception as e:
-            messagebox.showerror("Errore", f"Impossibile avviare il file .bat: {e}")
+            messagebox.showerror("Errore", f"Impossibile avviare lo script: {e}")
 
     # =========================================================================
     # --- METODI ADMIN GESTIONE DATABASE (Ora indentati dentro la classe!) ---

@@ -50,7 +50,7 @@ class HelpDeskView(ctk.CTk):
         
         # 3. Aggiungiamo le schede nell'ordine desiderato
         self.tab_manuale = self.tabview.add("Manuale di Risoluzione")
-        self.tab_ticket = self.tabview.add("Apri un Ticket")
+        #self.tab_ticket = self.tabview.add("Apri un Ticket")   <--- COMMENTATO PER ORA IN ATTESA DI IMPLEMENTAZIONE DELLA FUNZIONE NEL CONTROLLER
         self.tab_driver = self.tabview.add("Gestione Driver")
         self.tab_admin = self.tabview.add("Admin")
         
@@ -58,8 +58,8 @@ class HelpDeskView(ctk.CTk):
         self.vista_manuale = ManualeView(self.tab_manuale)
         self.vista_manuale.pack(fill="both", expand=True)
         
-        self.vista_ticket = TicketView(self.tab_ticket)
-        self.vista_ticket.pack(fill="both", expand=True)
+        #self.vista_ticket = TicketView(self.tab_ticket) <-- COMMENTATO PER ORA IN ATTESA DI IMPLEMENTAZIONE DELLA FUNZIONE NEL CONTROLLER
+        #self.vista_ticket.pack(fill="both", expand=True) <-- COMMENTATO PER ORA IN ATTESA DI IMPLEMENTAZIONE DELLA FUNZIONE NEL CONTROLLER
         
         self.vista_driver = DriverView(self.tab_driver)
         self.vista_driver.pack(fill="both", expand=True)
@@ -74,7 +74,7 @@ class HelpDeskView(ctk.CTk):
     def imposta_controller(self, controller):
         """Collega le funzioni del controller ai pulsanti delle sotto-viste."""
         # Collega il pulsante invia del form ticket
-        self.vista_ticket.btn_salva.configure(command=controller.salva_ticket)
+        # self.vista_ticket.btn_salva.configure(command=controller.salva_ticket).  <--- RIMUOVER IL COMMENTO UNA VOLTA IMPLEMENTATA LA FUNZIONE NEL CONTROLLER
         
         # Collega il pulsante della Zebra
         self.vista_driver.btn_zebra.configure(command=controller.ripristina_driver_zebra)

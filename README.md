@@ -82,5 +82,5 @@ pip install nuitka
 
 ### compilazione nuitka
 ```bash
-python -m nuitka --standalone --windowed --output-filename=HardwareHero --include-data-file=helpdesk.db=helpdesk.db --include-data-dir=assets=assets --include-data-dir=driver=driver --windows-icon-from-ico=assets/app_icon.ico main.py
+python -m nuitka --standalone --windowed --output-filename=HardwareHero --include-data-file=helpdesk.db=helpdesk.db --include-data-file=ZebraDriver.bat=ZebraDriver.bat --include-data-dir=assets=assets --include-data-dir=driver=driver --windows-icon-from-ico=assets/app_icon.ico main.py
 ```
