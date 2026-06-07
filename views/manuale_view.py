@@ -31,14 +31,26 @@ class ManualeView(ctk.CTkFrame):
         self.menu_problemi.pack(pady=10, padx=10, fill="x")
         
         # --- ELEMENTI COLONNA DESTRA (Dettaglio Guida) ---
-        self.lbl_titolo_problema = ctk.CTkLabel(self.colonna_destra, text="Seleziona un problema dal menu a sinistra", font=("Arial", 16, "bold"), wraplength=450)
-        self.lbl_titolo_problema.pack(pady=15, padx=10)
+        # Rimossi i wraplength statici: ora la larghezza si adatta dinamicamente
+        self.lbl_titolo_problema = ctk.CTkLabel(
+            self.colonna_destra, 
+            text="Seleziona un problema dal menu a sinistra", 
+            font=("Arial", 16, "bold"),
+            justify="center"
+        )
+        self.lbl_titolo_problema.pack(pady=15, padx=20, fill="x")
         
         self.lbl_passo_num = ctk.CTkLabel(self.colonna_destra, text="", font=("Arial", 12, "italic"))
         self.lbl_passo_num.pack(pady=5)
         
-        self.txt_guida = ctk.CTkLabel(self.colonna_destra, text="", font=("Arial", 13), wraplength=450, justify="left")
-        self.txt_guida.pack(pady=15, padx=10)
+        self.txt_guida = ctk.CTkLabel(
+            self.colonna_destra, 
+            text="", 
+            font=("Arial", 14), 
+            anchor="center",        
+            justify="center"
+        )
+        self.txt_guida.pack(pady=15, padx=20, fill="x")
         
         self.lbl_immagine = ctk.CTkLabel(self.colonna_destra, text="") # Contenitore per le foto dello step
         self.lbl_immagine.pack(pady=10)
@@ -54,6 +66,19 @@ class ManualeView(ctk.CTkFrame):
         
         self.btn_successivo = ctk.CTkButton(self.frame_navigazione, text="Successivo ➡", command=self.passo_successivo, width=100)
         self.btn_successivo.pack(side="left", padx=10)
+
+        # GESTIONE RESPONSIVE: Ascolta i cambi di dimensione della colonna destra
+        self.colonna_destra.bind("<Configure>", self.aggiusta_wrap_testo)
+
+    def aggiusta_wrap_testo(self, event):
+        """Calcola dinamicamente lo spazio disponibile e aggiorna l'andata a capo del testo."""
+        # Margine interno di 40 pixel per tenere il testo staccato dai bordi del frame
+        nuova_larghezza = event.width - 40
+        
+        # Applica il wrapping dinamico solo se la finestra ha una dimensione minima sensata
+        if nuova_larghezza > 100:
+            self.lbl_titolo_problema.configure(wraplength=nuova_larghezza)
+            self.txt_guida.configure(wraplength=nuova_larghezza)
 
     def inizializza_manuale(self, controller):
         """Viene chiamata dal main_view per caricare i primi dati dal DB."""
@@ -92,7 +117,7 @@ class ManualeView(ctk.CTkFrame):
     def on_problema_selezionato(self, titolo_scelto):
         """Carica tutti gli step dal DB relativi al problema cliccato."""
         problema_selezionato = next((p for p in self.problemi_correnti if p.titolo == titolo_scelto), None)
-        if problema_selezionato:  # <-- Controlla che qui ci sia scritto questo
+        if problema_selezionato:
             self.lbl_titolo_problema.configure(text=problema_selezionato.titolo)
             self.steps_correnti = self.controller.ottieni_steps_problema(problema_selezionato.id_problema)
             self.indice_step_corrente = 0
@@ -117,11 +142,11 @@ class ManualeView(ctk.CTkFrame):
         if step.immagine_path and os.path.exists(step.immagine_path):
             try:
                 img = ctk.CTkImage(light_image=Image.open(step.immagine_path), size=(250, 180))
-                self.lbl_immagine.configure(image=img)
+                self.lbl_immagine.configure(image=img, text="")
             except Exception:
                 self.lbl_immagine.configure(image="", text="[Errore caricamento immagine]")
         else:
-            self.lbl_immagine.configure(image="", text="") # Nessuna immagine
+            self.lbl_immagine.configure(image="", text="")
             
         # Gestione Pulsante Video Dinamico
         if step.video_url:
