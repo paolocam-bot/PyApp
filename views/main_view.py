@@ -3,14 +3,35 @@ import customtkinter as ctk
 from views.manuale_view import ManualeView
 from views.ticket_view import TicketView
 from views.driver_view import DriverView
+import os
+import sys
+from PIL import Image, ImageTk
 
 class HelpDeskView(ctk.CTk):
     def __init__(self):
         super().__init__()
         
-        # Impostazioni della finestra principale (ingrandita per ospitare la guida)
+        # Impostazioni della finestra principale
         self.title("Help Desk Aziendale - Portale Supporto")
-        self.geometry("850x650") 
+        self.geometry("850x650")
+        
+        # --- GESTIONE ICONA COMPATIBILE MAC / WINDOWS (Spostata Qui!) ---
+        try:
+            if sys.platform.startswith("win"):
+                # Se sei su Windows, usa il file .ico standard
+                if os.path.exists("app_icon.ico"):
+                    self.wm_iconbitmap("app_icon.ico")
+            else:
+                # Se sei su Mac, usa il PNG forzato con iconphoto salvato nell'oggetto
+                percorso_png = os.path.join("assets", "app_icon.png")
+                if os.path.exists(percorso_png):
+                    img_aperta = Image.open(percorso_png)
+                    img_ridimensionata = img_aperta.resize((512, 512))
+                    self.icona_sviluppo = ImageTk.PhotoImage(img_ridimensionata)
+                    self.iconphoto(False, self.icona_sviluppo)
+        except Exception as e:
+            print(f"Nota: Impossibile caricare l'icona in sviluppo: {e}")
+            
         ctk.set_appearance_mode("System")
         
         # 1. Creazione del sistema a Schede (Tabview)
