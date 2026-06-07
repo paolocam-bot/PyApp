@@ -1,0 +1,7 @@
+main.dist/
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.log

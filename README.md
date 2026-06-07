@@ -59,7 +59,7 @@ python main.py
 # Installare dento la venv
 pip install pyinstaller
 ```
-#### Compilazione su Windows (Generazione del file .exe)
+#### Compilazione su Windows Pypinstaller (Generazione del file .exe)
 ```bash
 # Windows
 pyinstaller --noconfirm --onedir --windowed --add-data "helpdesk.db;." --add-data "assets;assets" --icon="app_icon.ico" main.py
@@ -70,4 +70,17 @@ pyinstaller --noconfirm --onedir --windowed --add-data "helpdesk.db;." --add-dat
 ```bash
 # MacOs
 pyinstaller --noconfirm --onedir --windowed --add-data "helpdesk.db:." --add-data "assets:assets" main.py
+```
+## 📦 Compilazione Avanzata con Nuitka (Consigliata)
+
+Nuitka compila il codice Python direttamente in C, garantendo performance elevate e una maggiore protezione del codice sorgente.
+
+### Installazione di Nuitka
+```bash
+pip install nuitka
+```
+
+### compilazione nuitka
+```bash
+python -m nuitka --standalone --windowed --output-filename=HardwareHero --include-data-file=helpdesk.db=helpdesk.db --include-data-dir=assets=assets --include-data-dir=driver=driver --windows-icon-from-ico=assets/app_icon.ico main.py
 ```
