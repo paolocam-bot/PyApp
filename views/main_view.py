@@ -51,7 +51,7 @@ class HelpDeskView(ctk.CTk):
         # 3. Aggiungiamo le schede nell'ordine desiderato
         self.tab_manuale = self.tabview.add("Manuale di Risoluzione")
         #self.tab_ticket = self.tabview.add("Apri un Ticket")   <--- COMMENTATO PER ORA IN ATTESA DI IMPLEMENTAZIONE DELLA FUNZIONE NEL CONTROLLER
-        self.tab_driver = self.tabview.add("Gestione Driver")
+        self.tab_driver = self.tabview.add("Risoluzione Problemi")
         self.tab_admin = self.tabview.add("Admin")
         
         # 4. Inizializziamo le sotto-viste dentro i rispettivi tab
@@ -78,6 +78,9 @@ class HelpDeskView(ctk.CTk):
         
         # Collega il pulsante della Zebra
         self.vista_driver.btn_zebra.configure(command=controller.ripristina_driver_zebra)
+
+        # COLLEGA IL NUOVO PULSANTE PER TASTIERA/MOUSE
+        self.vista_driver.btn_input.configure(command=controller.ripristina_input_hardware)
         
         # Inizializza i dati dinamici (i menu a tendina) del manuale prendendoli dal DB
         self.vista_manuale.inizializza_manuale(controller)

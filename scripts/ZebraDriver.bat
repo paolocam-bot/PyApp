@@ -30,11 +30,11 @@ rundll32 printui.dll,PrintUIEntry /dl /n "GARANZIE" >nul 2>&1
 :: 3. INSTALLAZIONE E RINOMINA IN AUTONOMIA (Puntando alla cartella driver)
 echo [3/6] Installazione porte e associazione driver...
 
-:: Installa sulla porta USB001 e rinomina in "ZEBRA"
-rundll32 printui.dll,PrintUIEntry /if /b "ZEBRA" /f "%~dp0driver\ZebraDriver.inf" /r "USB001" /m "Zebra Designer v8" >nul 2>&1
+:: Installa sulla porta USB001 e va indietro di una cartella per trovare 'driver'
+rundll32 printui.dll,PrintUIEntry /if /b "ZEBRA" /f "%~dp0..\driver\ZebraDriver.inf" /r "USB001" /m "Zebra Designer v8" >nul 2>&1
 
-:: Installa sulla porta USB002 e rinomina in "GARANZIE"
-rundll32 printui.dll,PrintUIEntry /if /b "GARANZIE" /f "%~dp0driver\ZebraDriver.inf" /r "USB002" /m "Zebra Designer v8" >nul 2>&1
+:: Installa sulla porta USB002 e va indietro di una cartella per trovare 'driver'
+rundll32 printui.dll,PrintUIEntry /if /b "GARANZIE" /f "%~dp0..\driver\ZebraDriver.inf" /r "USB002" /m "Zebra Designer v8" >nul 2>&1
 
 :: 4. IMPOSTAZIONE STAMPANTE PRIMARIA (PREDEFINITA)
 echo [4/6] Impostazione di ZEBRA come stampante primaria...

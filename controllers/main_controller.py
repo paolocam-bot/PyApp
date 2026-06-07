@@ -174,11 +174,9 @@ class HelpDeskController:
         self.view.vista_ticket.txt_descrizione.delete("0.0", "end")
 
     def ripristina_driver_zebra(self):
-        # Individua la cartella in cui si trova l'eseguibile/script
         cartella_root = os.path.dirname(os.path.abspath(sys.argv[0]))
-            
-        # AGGIORNATO: Cambiato il nome del file in ZebraDriver.bat
-        percorso_bat = os.path.join(cartella_root, "ZebraDriver.bat") 
+        # AGGIORNATO: puntiamo alla sottocartella scripts
+        percorso_bat = os.path.join(cartella_root, "scripts", "ZebraDriver.bat") 
         
         if not os.path.exists(percorso_bat):
             messagebox.showerror("Errore", f"File '{percorso_bat}' non trovato!")
@@ -190,6 +188,23 @@ class HelpDeskController:
             messagebox.showinfo("Driver", "Script avviato. Accetta la richiesta UAC di Windows.")
         except Exception as e:
             messagebox.showerror("Errore", f"Impossibile avviare lo script: {e}")
+
+
+    def ripristina_input_hardware(self):
+        cartella_root = os.path.dirname(os.path.abspath(sys.argv[0]))
+        # AGGIORNATO: puntiamo alla sottocartella scripts
+        percorso_bat = os.path.join(cartella_root, "scripts", "RipristinaInput.bat")
+        
+        if not os.path.exists(percorso_bat):
+            messagebox.showerror("Errore", f"File '{percorso_bat}' non trovato!")
+            return
+            
+        try:
+            # Esegue il file .bat richiedendo i diritti di amministratore tramite PowerShell
+            subprocess.Popen(["powershell", "-Command", f"Start-Process '{percorso_bat}' -Verb RunAs"], shell=True)
+            messagebox.showinfo("Reset Hardware", "Procedura avviata! Clicca su 'SÌ' nella finestra di Windows che sta per apparire.")
+        except Exception as e:
+            messagebox.showerror("Errore", f"Impossibile avviare il ripristino: {e}")
 
     # =========================================================================
     # --- METODI ADMIN GESTIONE DATABASE (Ora indentati dentro la classe!) ---
