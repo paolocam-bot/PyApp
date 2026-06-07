@@ -10,21 +10,17 @@ class HelpDeskController:
     def __init__(self, view):
         self.view = view
         
-        # 1. Gestione dinamica del percorso del Database (Spostato dentro __init__)
+        # 1. Gestione dinamica del percorso del Database
         if getattr(sys, 'frozen', False):
-            # Se l'app è compilata (Opzione 1: DB dentro l'eseguibile)
-            # NOTA: Se invece usi l'Opzione 2 (cartella dist), cambia questa riga in:
-            # self.db_path = os.path.join(os.path.dirname(sys.executable), "helpdesk.db")
             self.db_path = os.path.join(sys._MEIPASS, "helpdesk.db")
         else:
-            # In modalità sviluppo (nella root PyApp)
             self.db_path = "helpdesk.db"
             
         self.inizializza_db()
 
     def ottieni_connessione(self):
         """Centralizza la connessione attivando le ottimizzazioni di SQLite."""
-        conn = sqlite3.connect(self.db_path) # Usa la variabile dinamica!
+        conn = sqlite3.connect(self.db_path)
         conn.execute("PRAGMA foreign_keys = ON;")
         conn.execute("PRAGMA journal_mode = WAL;")
         return conn
@@ -116,7 +112,7 @@ class HelpDeskController:
 
     def ottieni_sotto_categorie(self, macro_categoria):
         """Ritorna le sotto-categorie associate a una specifica macro categoria."""
-        conn = self.onn = self.ottieni_connessione()
+        conn = self.ottieni_connessione()
         cursor = conn.cursor()
         cursor.execute("SELECT DISTINCT sotto_categoria FROM manuale_problemi WHERE macro_categoria = ?", (macro_categoria,))
         risultati = [r[0] for r in cursor.fetchall()]
@@ -156,7 +152,6 @@ class HelpDeskController:
         return steps
 
     def salva_ticket(self):
-        # Recupera i dati dalla vista del ticket attraverso la main_view
         titolo = self.view.vista_ticket.entry_titolo.get()
         urgenza = self.view.vista_ticket.menu_urgenza.get()
         descrizione = self.view.vista_ticket.txt_descrizione.get("0.0", "end").strip()
@@ -174,7 +169,7 @@ class HelpDeskController:
         conn.commit()
         conn.close()
         
-        messagebox.showinfo("Successo", "Ticket salvato nel database locale!")
+        messagebox.showinfo("Successo", "Ticket saved into local database!")
         self.view.vista_ticket.entry_titolo.delete(0, "end")
         self.view.vista_ticket.txt_descrizione.delete("0.0", "end")
 
@@ -195,3 +190,154 @@ class HelpDeskController:
             messagebox.showinfo("Driver", "Script avviato. Accetta la richiesta UAC di Windows.")
         except Exception as e:
             messagebox.showerror("Errore", f"Impossibile avviare il file .bat: {e}")
+
+    # =========================================================================
+    # --- METODI ADMIN GESTIONE DATABASE (Ora indentati dentro la classe!) ---
+    # =========================================================================
+
+    def carica_tabella_admin(self):
+        """Svuota la tabella grafica dell'admin e la ripopola con i dati delle due tabelle collegate."""
+        admin_v = self.view.vista_admin
+        for row in admin_v.tabella.get_children():
+            admin_v.tabella.delete(row)
+            
+        try:
+            conn = self.ottieni_connessione()
+            cursor = conn.cursor()
+            # Uniamo le due tabelle con una JOIN per mostrare Categoria, Problema e gli Step associati
+            cursor.execute('''
+                SELECT s.id, p.macro_categoria, p.titolo, s.numero_passo, s.testo 
+                FROM manuale_steps s
+                JOIN manuale_problemi p ON s.id_problema = p.id
+                ORDER BY p.macro_categoria, p.titolo, s.numero_passo
+            ''')
+            righe = cursor.fetchall()
+            conn.close()
+            
+            for riga in righe:
+                admin_v.tabella.insert("", "end", values=riga)
+        except Exception as e:
+            print(f"Errore nel caricamento della tabella admin: {e}")
+
+    def recupera_media_per_form(self, id_step):
+        """Trova i path multimediali dello step selezionato e li scrive nel campo di input."""
+        try:
+            conn = self.ottieni_connessione()
+            cursor = conn.cursor()
+            cursor.execute("SELECT immagine_path FROM manuale_steps WHERE id = ?", (id_step,))
+            risultato = cursor.fetchone()
+            conn.close()
+            
+            if risultato:
+                self.view.vista_admin.ent_path_media.delete(0, "end")
+                self.view.vista_admin.ent_path_media.insert(0, risultato[0] if risultato[0] else "")
+        except Exception as e:
+            print(e)
+
+    def aggiungi_guida_db(self):
+        """Inserisce un nuovo step creando il problema se non esiste o agganciandosi a uno esistente."""
+        admin_v = self.view.vista_admin
+        
+        categoria = admin_v.ent_categoria.get().strip()
+        problema = admin_v.ent_problema.get().strip()
+        step_num = admin_v.ent_step_num.get().strip()
+        descrizione = admin_v.txt_descrizione.get("0.0", "end").strip()
+        path_media = admin_v.ent_path_media.get().strip()
+        
+        if not categoria or not problema or not step_num or not descrizione:
+            messagebox.showwarning("Attenzione", "Compila tutti i campi principali!")
+            return
+            
+        try:
+            conn = self.ottieni_connessione()
+            cursor = conn.cursor()
+            
+            # 1. Controlla se il problema esiste già nella tabella dei macro-problemi
+            cursor.execute('''
+                SELECT id FROM manuale_problemi 
+                WHERE macro_categoria = ? AND titolo = ?
+            ''', (categoria, problema))
+            res = cursor.fetchone()
+            
+            if res:
+                id_problema = res[0]
+            else:
+                # Altrimenti lo crea impostando temporaneamente la sottocategoria uguale alla macro
+                cursor.execute('''
+                    INSERT INTO manuale_problemi (macro_categoria, sotto_categoria, titolo)
+                    VALUES (?, ?, ?)
+                ''', (categoria, categoria, problema))
+                id_problema = cursor.lastrowid
+            
+            # 2. Inserisce lo step associato al problema trovato o creato
+            cursor.execute('''
+                INSERT INTO manuale_steps (id_problema, numero_passo, testo, immagine_path, video_url)
+                VALUES (?, ?, ?, ?, ?)
+            ''', (id_problema, int(step_num), descrizione, path_media, ""))
+            
+            conn.commit()
+            conn.close()
+            
+            messagebox.showinfo("Successo", "Nuovo step salvato correttamente!")
+            admin_v.svuota_form()
+            self.carica_tabella_admin()
+            self.view.vista_manuale.inizializza_manuale(self)
+            
+        except Exception as e:
+            messagebox.showerror("Errore", f"Impossibile aggiungere la guida: {e}")
+
+    def modifica_guida_db(self):
+        """Aggiorna la descrizione o il percorso media dello step selezionato."""
+        admin_v = self.view.vista_admin
+        if not admin_v.id_selezionato:
+            messagebox.showwarning("Attenzione", "Seleziona prima uno step dalla tabella!")
+            return
+            
+        try:
+            conn = self.ottieni_connessione()
+            cursor = conn.cursor()
+            
+            # Aggiorna i dati testuali direttamente sullo step specifico usando l'ID univoco
+            cursor.execute('''
+                UPDATE manuale_steps 
+                SET numero_passo = ?, testo = ?, immagine_path = ?
+                WHERE id = ?
+            ''', (
+                int(admin_v.ent_step_num.get()), 
+                admin_v.txt_descrizione.get("0.0", "end").strip(), 
+                admin_v.ent_path_media.get(), 
+                admin_v.id_selezionato
+            ))
+            
+            conn.commit()
+            conn.close()
+            
+            messagebox.showinfo("Successo", "Modifiche salvate nel database!")
+            admin_v.svuota_form()
+            self.carica_tabella_admin()
+            self.view.vista_manuale.inizializza_manuale(self)
+        except Exception as e:
+            messagebox.showerror("Errore", f"Impossibile modificare lo step: {e}")
+
+    def elimina_guida_db(self):
+        """Cancella permanentemente lo step selezionato dal database."""
+        admin_v = self.view.vista_admin
+        if not admin_v.id_selezionato:
+            messagebox.showwarning("Attenzione", "Seleziona prima un elemento da eliminare!")
+            return
+            
+        conferma = messagebox.askyesno("Conferma", "Vuoi eliminare definitivamente questo step?")
+        if conferma:
+            try:
+                conn = self.ottieni_connessione()
+                cursor = conn.cursor()
+                cursor.execute("DELETE FROM manuale_steps WHERE id = ?", (admin_v.id_selezionato,))
+                conn.commit()
+                conn.close()
+                
+                messagebox.showinfo("Eliminato", "Step rimosso dal database.")
+                admin_v.svuota_form()
+                self.carica_tabella_admin()
+                self.view.vista_manuale.inizializza_manuale(self)
+            except Exception as e:
+                messagebox.showerror("Errore", f"Impossibile eliminare: {e}")

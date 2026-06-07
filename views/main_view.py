@@ -3,6 +3,7 @@ import customtkinter as ctk
 from views.manuale_view import ManualeView
 from views.ticket_view import TicketView
 from views.driver_view import DriverView
+from views.admin_view import AdminView
 import os
 import sys
 from PIL import Image, ImageTk
@@ -15,15 +16,15 @@ class HelpDeskView(ctk.CTk):
         self.title("Help Desk Aziendale - Portale Supporto")
         self.geometry("850x650")
         
-        # --- GESTIONE ICONA COMPATIBILE MAC / WINDOWS (Spostata Qui!) ---
+       
+        # --- GESTIONE ICONA COMPATIBILE MAC / WINDOWS ---
         try:
             if sys.platform.startswith("win"):
-                # Se sei su Windows, usa il file .ico standard
                 if os.path.exists("app_icon.ico"):
                     self.wm_iconbitmap("app_icon.ico")
             else:
-                # Se sei su Mac, usa il PNG forzato con iconphoto salvato nell'oggetto
-                percorso_png = os.path.join("assets", "app_icon.png")
+                # Modificato per puntare alla cartella assets
+                percorso_png = os.path.join("assets", "app_icon.png")  
                 if os.path.exists(percorso_png):
                     img_aperta = Image.open(percorso_png)
                     img_ridimensionata = img_aperta.resize((512, 512))
@@ -34,16 +35,26 @@ class HelpDeskView(ctk.CTk):
             
         ctk.set_appearance_mode("System")
         
-        # 1. Creazione del sistema a Schede (Tabview)
-        self.tabview = ctk.CTkTabview(self, width=830, height=630)
+        # --- 1. PRIMA IL PACK DELLE STRUTTURE ANCORATE (Fondo dello schermo) ---
+        self.lbl_firma = ctk.CTkLabel(
+            self, 
+            text="Developed by PaoloCamedda - V.0.1 prealfa", 
+            font=ctk.CTkFont(size=11, weight="normal"),
+            text_color="gray"
+        )
+        self.lbl_firma.pack(side="bottom", pady=5, padx=10, fill="x")
+        
+        # --- 2. DOPO IL PACK DEL COMPONENTE CENTRALE ESPANDIBILE ---
+        self.tabview = ctk.CTkTabview(self, width=830, height=600)
         self.tabview.pack(pady=10, padx=10, fill="both", expand=True)
         
-        # 2. Aggiungiamo le schede nell'ordine desiderato
+        # 3. Aggiungiamo le schede nell'ordine desiderato
         self.tab_manuale = self.tabview.add("Manuale di Risoluzione")
         self.tab_ticket = self.tabview.add("Apri un Ticket")
         self.tab_driver = self.tabview.add("Gestione Driver")
+        self.tab_admin = self.tabview.add("Admin")
         
-        # 3. Inizializziamo le sotto-viste dentro i rispettivi tab
+        # 4. Inizializziamo le sotto-viste dentro i rispettivi tab
         self.vista_manuale = ManualeView(self.tab_manuale)
         self.vista_manuale.pack(fill="both", expand=True)
         
@@ -53,8 +64,12 @@ class HelpDeskView(ctk.CTk):
         self.vista_driver = DriverView(self.tab_driver)
         self.vista_driver.pack(fill="both", expand=True)
 
-        # 4. FORZATURA: Seleziona la scheda del manuale come attiva all'avvio
+        self.vista_admin = AdminView(self.tab_admin)
+        self.vista_admin.pack(fill="both", expand=True)
+
+        # 5. FORZATURA: Seleziona la scheda del manuale come attiva all'avvio
         self.tabview.set("Manuale di Risoluzione")
+
 
     def imposta_controller(self, controller):
         """Collega le funzioni del controller ai pulsanti delle sotto-viste."""
@@ -66,3 +81,10 @@ class HelpDeskView(ctk.CTk):
         
         # Inizializza i dati dinamici (i menu a tendina) del manuale prendendoli dal DB
         self.vista_manuale.inizializza_manuale(controller)
+
+        # --- CONFIGURAZIONE PANNELLO ADMIN (CRUD INTERFACCIA) ---
+        self.vista_admin.controller = controller
+        
+        self.vista_admin.btn_aggiungi.configure(command=controller.aggiungi_guida_db)
+        self.vista_admin.btn_modifica.configure(command=controller.modifica_guida_db)
+        self.vista_admin.btn_elimina.configure(command=controller.elimina_guida_db)
