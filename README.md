@@ -1,5 +1,4 @@
-# Definiamo il contenuto del README.md
-readme_content = """# 🛠️ Help Desk Aziendale - Portale Supporto
+# HardwareHero a automatic installer driver end manual of problemsolving 
 
 Un'applicazione desktop intuitiva e leggera sviluppata in Python utilizzando **CustomTkinter** (interfaccia grafica moderna basata su Tkinter) basata sul pattern architetturale **MVC (Model-View-Controller)**. L'app offre un manuale di risoluzione rapida per i problemi IT aziendali (stampanti, rete, ecc.), un sistema di apertura ticket locale e un pannello amministratore protetto da password per la gestione (CRUD) delle guide direttamente dall'interfaccia.
 
