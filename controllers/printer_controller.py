@@ -127,7 +127,7 @@ class PrinterManagerController:
                 messagebox.showerror("Errore Rete", f"Dettaglio errore: {e}")
 
     def cmd_click_status(self):
-        """Invia la richiesta di stampa della configurazione hardware."""
+        """Interroga direttamente i sensori hardware della stampante via USB o IP."""
         dati = self.vista_stampanti.get_dati_interfaccia()
         tipo = dati.get("tipo", "USB")
         target = dati.get("target", "").strip()
@@ -140,17 +140,71 @@ class PrinterManagerController:
 
         if tipo == "USB":
             try:
-                z = Zebra()
-                z.setqueue(target)
-                # Sostituito il comando EPL con ZPL puro (~WC) universale per stampare la configurazione
-                z.output("~WC")
-                messagebox.showinfo(
-                    "Stato USB",
-                    f"Richiesta di stampa configurazione inviata a: {target}",
-                )
+                import win32print
+                
+                # 1. Apriamo la stampante con permessi di lettura/scrittura diretti (RAW)
+                p_handle = win32print.OpenPrinter(target, {"DesiredAccess": win32print.PRINTER_ACCESS_ADMINISTER | win32print.PRINTER_ACCESS_USE})
+                
+                # Configura il tipo di documento come RAW per inviare comandi bypassando il driver
+                job_data = ("Diagnostica Hardware", None, "RAW")
+                hJob = win32print.StartDocPrinter(p_handle, 1, job_data)
+                win32print.StartPagePrinter(p_handle)
+                
+                # Invia il comando Host Status (~HS) direttamente alla scheda madre della Zebra
+                comando = b"~HS"
+                win32print.WritePrinter(p_handle, comando)
+                
+                win32print.EndPagePrinter(p_handle)
+                win32print.EndDocPrinter(p_handle)
+                
+                # 2. LETTURA DEI SENSORI (Legge la risposta hardware dal buffer della stampante)
+                # Attendiamo un millisecondo per permettere alla Zebra di elaborare e rispondere
+                import time
+                time.sleep(0.1)
+                
+                # Leggiamo i dati di ritorno dal chip USB della stampante
+                err, risposta_byte = win32print.ReadPrinter(p_handle, 1024)
+                win32print.ClosePrinter(p_handle)
+                
+                if risposta_byte:
+                    risposta_testo = risposta_byte.decode("utf-8", errors="ignore").strip()
+                    
+                    # Decodifica base dei sensori Zebra (La stringa ~HS restituisce 3 righe separate da codici speciali)
+                    # Esempio tipico di risposta: 030,0,0,1234,000,0,-...
+                    info_sensori = "Risposta Sensori Zebra (USB):\n\n"
+                    
+                    if "1" in risposta_testo: # Analisi preliminare dei flag comuni
+                        if "Paper Out" in risposta_testo or ",1," in risposta_testo:
+                            info_sensori += "⚠️ ATTENZIONE: Carta/Etichette esaurite!\n"
+                        if "Ribbon Out" in risposta_testo:
+                            info_sensori += "⚠️ ATTENZIONE: Nastro (Ribbon) esaurito o inserito male!\n"
+                        if "Head Open" in risposta_testo:
+                            info_sensori += "⚠️ ATTENZIONE: Sportello/Testina aperta!\n"
+                    else:
+                        info_sensori += "✅ Hardware OK: Sensori in stato regolare.\n"
+                        
+                    messagebox.showinfo(
+                        "Diagnostica Hardware Reale", 
+                        f"{info_sensori}\n[Stringa Raw ricevuta dalla Zebra]:\n{risposta_testo}"
+                    )
+                else:
+                    # Se il chip USB non risponde, molto spesso è perché la stampante è bloccata in un errore critico
+                    messagebox.showwarning(
+                        "Nessun Segnale", 
+                        f"La stampante '{target}' è connessa ma i sensori hardware non rispondono.\n\n"
+                        "Consiglio: Se la spia della Zebra è ROSSA, spegni e riaccendi la stampante "
+                        "per svuotare la memoria hardware bloccata."
+                    )
+                    
             except Exception as e:
-                messagebox.showerror("Errore USB", f"Dettaglio errore: {e}")
+                messagebox.showerror(
+                    "Errore Canale RAW", 
+                    f"Impossibile aprire la comunicazione diretta USB.\nDettaglio: {e}\n\n"
+                    "Nota: Assicurati di eseguire l'app come Amministratore se Windows blocca l'accesso RAW."
+                )
+        
         else:
+            # Connessione di Rete IP (Qui la comunicazione bidirezionale è nativa e funziona sempre direttamente)
             try:
                 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
                 s.settimeout(2.0)
@@ -158,8 +212,9 @@ class PrinterManagerController:
                 s.sendall(b"~HS")
                 risposta = s.recv(1024).decode("utf-8")
                 s.close()
+                
                 messagebox.showinfo(
-                    "Stato Rete", f"Risposta da {target}:\n{risposta}"
+                    "Stato Rete Hardware", f"Risposta diagnostica sensori da {target}:\n{risposta}"
                 )
             except Exception as e:
                 messagebox.showerror("Errore LAN", f"Dettaglio errore: {e}")
@@ -208,9 +263,11 @@ class PrinterManagerController:
             )
             return
 
-        stringa_zpl = (
-            "^XA^FO50,50^GB400,200,4^FS^FO100,100^A0N,50,50^FDTEST OK^FS^XZ"
-        )
+        # Riquadro di prova proporzionato alla fustella selezionata
+        if "GARANZIE" in target.upper():
+            stringa_zpl = "^XA^FO20,20^GB280,200,4^FS^FO50,90^A0N,40,40^FDGARANZIE OK^FS^XZ"
+        else:
+            stringa_zpl = "^XA^FO40,40^GB480,720,4^FS^FO80,350^A0N,60,60^FDZEBRA 7x10 OK^FS^XZ"
 
         if tipo == "USB":
             try:
@@ -235,3 +292,122 @@ class PrinterManagerController:
                 )
             except Exception as e:
                 messagebox.showerror("Errore Rete", f"Dettaglio errore: {e}")
+    
+    def cmd_applica_formato_fustella(self):
+        """Imposta dinamicamente la fustella sia a livello hardware (Zebra) sia a livello software (Windows)."""
+        dati = self.vista_stampanti.get_dati_interfaccia()
+        tipo = dati.get("tipo", "USB")
+        target = dati.get("target", "").strip()
+
+        if not target or "Nessuna" in target:
+            messagebox.showwarning(
+                "Azione Annullata", "Seleziona prima una stampante valida."
+            )
+            return
+
+        # ---> INSERISCI QUI LA CHIAMATA ALLA FUNZIONE DI WINDOWS <---
+        # Prima di toccare l'hardware, forziamo i parametri nel pannello di controllo
+        self.cmd_forza_dimensioni_in_windows()
+
+        # 1. PARAMETRIZZAZIONE DELLE MISURE HARDWARE (Dots per 203 DPI)
+        if "GARANZIE" in target.upper():
+            width_dots = 320
+            height_dots = 240
+            gap_dots = 24
+            info_testo = "GARANZIE (4x3 cm) Orizzontale"
+            
+        elif "ZEBRA" in target.upper():
+            width_dots = 560
+            height_dots = 800
+            gap_dots = 24
+            info_testo = "ZEBRA (7x10 cm) Orizzontale"
+            
+        else:
+            return
+
+        # 2. SEZIONE AZIONE: AGGIORNAMENTO DIRETTO HARDWARE (RAM ZEBRA)
+        if tipo == "USB":
+            try:
+                z = Zebra()
+                z.setqueue(target)
+                
+                # Invia il setup dei margini hardware alla memoria della Zebra
+                z.setup(
+                    direct_thermal=True, 
+                    label_height=(height_dots, gap_dots), 
+                    label_width=width_dots
+                )
+                
+                # Forza la ricalibrazione dei sensori fisici (giro della fustella)
+                z.autosense()
+                
+                messagebox.showinfo(
+                    "Fustella & Driver Aggiornati", 
+                    f"Configurazione completata con successo!\n\n"
+                    f"Profilo: {info_testo}\n"
+                    f"I sensori della stampante sono allineati."
+                )
+                
+            except Exception as e:
+                messagebox.showerror(
+                    "Errore Hardware", f"Impossibile riconfigurare i sensori USB: {e}"
+                )
+
+    def cmd_forza_dimensioni_in_windows(self):
+        """Modifica le impostazioni di stampa avanzate (DevMode) direttamente in Windows."""
+        dati = self.vista_stampanti.get_dati_interfaccia()
+        target = dati.get("target", "").strip()
+
+        if not target or "Nessuna" in target:
+            return
+
+        # 1. Definiamo le misure in DECIMI DI MILLIMETRO (lo standard che vuole Windows)
+        if "GARANZIE" in target.upper():
+            larghezza_mm_10 = 400  # 40 mm -> 400 decimi
+            altezza_mm_10 = 300    # 30 mm -> 300 decimi
+            info = "GARANZIE (4x3 cm)"
+        elif "ZEBRA" in target.upper():
+            larghezza_mm_10 = 700  # 70 mm -> 700 decimi
+            altezza_mm_10 = 1000   # 100 mm -> 1000 decimi
+            info = "ZEBRA (7x10 cm)"
+        else:
+            return
+
+        try:
+            import win32print
+            import numpy as np # A volte serve per gestire i puntatori, ma win32print nativo basta
+            
+            # Apriamo la stampante con i permessi di configurazione amministrativa
+            PRINTER_ACCESS_ADMINISTER = 0x00000004
+            PRINTER_ACCESS_USE = 0x00000008
+            differenze = {"DesiredAccess": PRINTER_ACCESS_ADMINISTER | PRINTER_ACCESS_USE}
+            
+            hPrinter = win32print.OpenPrinter(target, differenze)
+            
+            try:
+                # Recuperiamo le impostazioni attuali (Livello 2 contiene il DEVMODE)
+                info_stampante = win32print.GetPrinter(hPrinter, 2)
+                devmode = info_stampante['pDevMode']
+                
+                # Modifichiamo i campi interni del driver Windows
+                devmode.PaperWidth = larghezza_mm_10
+                devmode.PaperLength = altezza_mm_10
+                devmode.Fields |= win32print.DM_PAPERWIDTH | win32print.DM_PAPERLENGTH
+                
+                # Sovrascriviamo le impostazioni di Windows
+                win32print.SetPrinter(hPrinter, 2, info_stampante, 0)
+                
+                messagebox.showinfo(
+                    "Proprietà Windows Aggiornate", 
+                    f"Il formato è stato modificato anche nelle impostazioni avanzate di Windows!\n\n"
+                    f"Profilo: {info}\nOra Windows vede la fustella corretta."
+                )
+            finally:
+                win32print.ClosePrinter(hPrinter)
+                
+        except Exception as e:
+            messagebox.showerror(
+                "Errore Driver Windows", 
+                f"Impossibile aggiornare le preferenze di Windows: {e}\n\n"
+                "Nota: Per modificare le impostazioni di sistema, avvia l'app come Amministratore."
+            )

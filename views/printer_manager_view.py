@@ -53,8 +53,18 @@ class FrameGestioneStampante(ctk.CTkFrame):
             text="⚙️ Installa / Ripristina Driver Stampante", 
             fg_color="#4b5563" # Colore grigio scuro per distinguerlo dalle azioni dirette
         )
-        self.btn_installa_driver.pack(pady=(0, 15), fill="x", padx=40)
+        self.btn_installa_driver.pack(pady=(0, 10), fill="x", padx=40)
 
+        # --- SEZIONE FORMATO FUSTELLA MODULARE ---
+        self.btn_imposta_fustella = ctk.CTkButton(
+            master=self.frame_azioni,  
+            text="📐 Applica Formato Fustella",
+            fg_color="#2563eb",
+            command=lambda: self.controller.cmd_applica_formato_fustella() if self.controller else None
+        )
+        self.btn_imposta_fustella.pack(pady=10, fill="x", padx=40)
+
+        
     def get_dati_interfaccia(self):
         """Restituisce il target selezionato e deduce il tipo in base al testo."""
         scelta = self.cmb_dispositivo.get().strip()
