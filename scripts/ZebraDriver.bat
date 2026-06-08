@@ -1,19 +1,23 @@
 @echo off
-:: Forza l'esecuzione come Amministratore
+:: Controlla se siamo davvero amministratori (sicurezza interna)
 net session >nul 2>&1
-if %errorLevel% == 0 (
-    goto :inizio
-) else (
-    echo Richiesti i permessi di amministratore...
-    powershell -Command "Start-Process '%~f0' -Verb RunAs"
+if %errorLevel% NEQ 0 (
+    echo [ERRORE] Esegui l'applicazione principale come Amministratore.
+    timeout /t 5
     exit /b
 )
 
-:inizio
+:: Recuperiamo il percorso assoluto della cartella "drivers" inviato da Python
+:: Se avviato a mano per test, fa il fallback sulla cartella "drivers" accanto a "scripts"
+set "DRIVERS_DIR=%~1"
+if "%DRIVERS_DIR%"=="" set "DRIVERS_DIR=%~dp0..\drivers"
+
 cls
 echo ====================================================
 echo   RIPRISTINO, CONFIGURAZIONE E TARATURA ZEBRA
 echo ====================================================
+echo.
+echo Cartella sorgente driver: %DRIVERS_DIR%
 echo.
 
 :: 1. SVUOTA LA CODA DI STAMPA DI WINDOWS
@@ -27,31 +31,28 @@ echo [2/6] Rimozione vecchie stampanti ZEBRA e GARANZIE...
 rundll32 printui.dll,PrintUIEntry /dl /n "ZEBRA" >nul 2>&1
 rundll32 printui.dll,PrintUIEntry /dl /n "GARANZIE" >nul 2>&1
 
-:: 3. INSTALLAZIONE E RINOMINA IN AUTONOMIA (Puntando alla cartella driver)
-echo [3/6] Installazione porte e associazione driver...
+:: 3. INIEZIONE DRIVER NEL SISTEMA (Pnputil) E APERTURA PORTE
+echo [3/6] Registrazione driver nel sistema e associazione porte...
+:: Iniettiamo il driver usando il nome corretto ZBRN.inf
+pnputil /add-driver "%DRIVERS_DIR%\ZBRN.inf" /install >nul 2>&1
 
-:: Installa sulla porta USB001 e va indietro di una cartella per trovare 'driver'
-rundll32 printui.dll,PrintUIEntry /if /b "ZEBRA" /f "%~dp0..\driver\ZebraDriver.inf" /r "USB001" /m "Zebra Designer v8" >nul 2>&1
+:: Installa "ZEBRA" sulla porta USB001 usando ZBRN.inf
+rundll32 printui.dll,PrintUIEntry /if /b "ZEBRA" /f "%DRIVERS_DIR%\ZBRN.inf" /r "USB001" /m "ZEBRA" >nul 2>&1
 
-:: Installa sulla porta USB002 e va indietro di una cartella per trovare 'driver'
-rundll32 printui.dll,PrintUIEntry /if /b "GARANZIE" /f "%~dp0..\driver\ZebraDriver.inf" /r "USB002" /m "Zebra Designer v8" >nul 2>&1
+:: Installa "GARANZIE" sulla porta USB002 usando ZBRN.inf
+rundll32 printui.dll,PrintUIEntry /if /b "GARANZIE" /f "%DRIVERS_DIR%\ZBRN.inf" /r "USB002" /m "GARANZIE" >nul 2>&1
 
 :: 4. IMPOSTAZIONE STAMPANTE PRIMARIA (PREDEFINITA)
 echo [4/6] Impostazione di ZEBRA come stampante primaria...
-rundll32 printui.dll,PrintUIEntry /y /n "ZEBRA"
+rundll32 printui.dll,PrintUIEntry /y /n "ZEBRA" >nul 2>&1
 
-:: 5. SETTAGGI HARDCODED TRAMITE POWERSHELL (Driver Windows)
-echo [5/6] Configurazione layout geometrico hardcoded...
-:: ZEBRA: 70mm altezza x 100mm larghezza, Orizzontale
-powershell -Command "Set-PrintConfiguration -PrinterName 'ZEBRA' -PaperSize 'UserDefined' -LabelHeight 70mm -LabelWidth 100mm -Orientation Landscape" >nul 2>&1
+:: 5. SETTAGGI GEOMETRICI TRAMITE POWERSHELL
+echo [5/6]me 'ZEBRA' -PaperSize 'UserDefined' -LabelHeight 70mm -LabelWidth 100mm -Orientation Landscape" >nul Configurazione layout geometrico nei driver...
+powershell -Command "Set-PrintConfiguration -PrinterNa 2>&1
+powershell -Command "Set-PrintConfiguration -PrinterName 'ZDesigner GK420d' -PaperSize 'UserDefined' -LabelHeight 30mm -LabelWidth 40mm -Orientation Landscape" >nul 2>&1
 
-:: GARANZIE: 30mm altezza x 40mm larghezza, Orizzontale
-powershell -Command "Set-PrintConfiguration -PrinterName 'GARANZIE' -PaperSize 'UserDefined' -LabelHeight 30mm -LabelWidth 40mm -Orientation Landscape" >nul 2>&1
-
-:: 6. TARATURA HARDWARE, ORIENTAMENTO INTERNO E RESET TOTALE (Comandi ZPL)
+:: 6. TARATURA HARDWARE E EMISSIONE COMANDI ZPL
 echo [6/6] Invio comandi hardware ZPL e taratura ottica...
-
-:: Condividi temporaneamente le stampanti in locale per inviare i comandi echo
 net share ZEBRA_SHARE=C:\ /grant:everyone,full >nul 2>&1
 net share GAR_SHARE=C:\ /grant:everyone,full >nul 2>&1
 

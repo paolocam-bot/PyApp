@@ -4,6 +4,7 @@ import sqlite3
 import subprocess
 import shutil
 from tkinter import messagebox
+from tkinter import messagebox
 from models.ticket_model import Ticket
 from models.manuale_model import Problema, StepRisoluzione
 
@@ -453,3 +454,6 @@ class HelpDeskController:
                 
             except Exception as e:
                 messagebox.showerror("Errore", f"Impossibile eliminare lo step: {e}")
+
+
+    
