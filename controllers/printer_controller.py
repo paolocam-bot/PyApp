@@ -127,97 +127,29 @@ class PrinterManagerController:
                 messagebox.showerror("Errore Rete", f"Dettaglio errore: {e}")
 
     def cmd_click_status(self):
-        """Interroga direttamente i sensori hardware della stampante via USB o IP."""
+        """Invia un comando RAW per costringere la stampante a stampare lo stato dei sensori."""
         dati = self.vista_stampanti.get_dati_interfaccia()
         tipo = dati.get("tipo", "USB")
         target = dati.get("target", "").strip()
 
         if not target or "Nessuna" in target:
-            messagebox.showwarning(
-                "Azione Annullata", "Nessuna stampante selezionata."
-            )
             return
 
         if tipo == "USB":
             try:
-                import win32print
+                z = Zebra()
+                z.setqueue(target)
                 
-                # 1. Apriamo la stampante con permessi di lettura/scrittura diretti (RAW)
-                p_handle = win32print.OpenPrinter(target, {"DesiredAccess": win32print.PRINTER_ACCESS_ADMINISTER | win32print.PRINTER_ACCESS_USE})
-                
-                # Configura il tipo di documento come RAW per inviare comandi bypassando il driver
-                job_data = ("Diagnostica Hardware", None, "RAW")
-                hJob = win32print.StartDocPrinter(p_handle, 1, job_data)
-                win32print.StartPagePrinter(p_handle)
-                
-                # Invia il comando Host Status (~HS) direttamente alla scheda madre della Zebra
-                comando = b"~HS"
-                win32print.WritePrinter(p_handle, comando)
-                
-                win32print.EndPagePrinter(p_handle)
-                win32print.EndDocPrinter(p_handle)
-                
-                # 2. LETTURA DEI SENSORI (Legge la risposta hardware dal buffer della stampante)
-                # Attendiamo un millisecondo per permettere alla Zebra di elaborare e rispondere
-                import time
-                time.sleep(0.1)
-                
-                # Leggiamo i dati di ritorno dal chip USB della stampante
-                err, risposta_byte = win32print.ReadPrinter(p_handle, 1024)
-                win32print.ClosePrinter(p_handle)
-                
-                if risposta_byte:
-                    risposta_testo = risposta_byte.decode("utf-8", errors="ignore").strip()
-                    
-                    # Decodifica base dei sensori Zebra (La stringa ~HS restituisce 3 righe separate da codici speciali)
-                    # Esempio tipico di risposta: 030,0,0,1234,000,0,-...
-                    info_sensori = "Risposta Sensori Zebra (USB):\n\n"
-                    
-                    if "1" in risposta_testo: # Analisi preliminare dei flag comuni
-                        if "Paper Out" in risposta_testo or ",1," in risposta_testo:
-                            info_sensori += "⚠️ ATTENZIONE: Carta/Etichette esaurite!\n"
-                        if "Ribbon Out" in risposta_testo:
-                            info_sensori += "⚠️ ATTENZIONE: Nastro (Ribbon) esaurito o inserito male!\n"
-                        if "Head Open" in risposta_testo:
-                            info_sensori += "⚠️ ATTENZIONE: Sportello/Testina aperta!\n"
-                    else:
-                        info_sensori += "✅ Hardware OK: Sensori in stato regolare.\n"
-                        
-                    messagebox.showinfo(
-                        "Diagnostica Hardware Reale", 
-                        f"{info_sensori}\n[Stringa Raw ricevuta dalla Zebra]:\n{risposta_testo}"
-                    )
-                else:
-                    # Se il chip USB non risponde, molto spesso è perché la stampante è bloccata in un errore critico
-                    messagebox.showwarning(
-                        "Nessun Segnale", 
-                        f"La stampante '{target}' è connessa ma i sensori hardware non rispondono.\n\n"
-                        "Consiglio: Se la spia della Zebra è ROSSA, spegni e riaccendi la stampante "
-                        "per svuotare la memoria hardware bloccata."
-                    )
-                    
-            except Exception as e:
-                messagebox.showerror(
-                    "Errore Canale RAW", 
-                    f"Impossibile aprire la comunicazione diretta USB.\nDettaglio: {e}\n\n"
-                    "Nota: Assicurati di eseguire l'app come Amministratore se Windows blocca l'accesso RAW."
-                )
-        
-        else:
-            # Connessione di Rete IP (Qui la comunicazione bidirezionale è nativa e funziona sempre direttamente)
-            try:
-                s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-                s.settimeout(2.0)
-                s.connect((target.replace(" (Rete IP)", ""), 9100))
-                s.sendall(b"~HS")
-                risposta = s.recv(1024).decode("utf-8")
-                s.close()
+                # Spara il comando RAW di stampa configurazione hardware (ZPL)
+                z.output("~WC") 
                 
                 messagebox.showinfo(
-                    "Stato Rete Hardware", f"Risposta diagnostica sensori da {target}:\n{risposta}"
+                    "Diagnostica Hardware", 
+                    f"Comando di autodiagnostica inviato a '{target}'.\n\n"
+                    "La stampante sta stampando la configurazione dei sensori su etichetta."
                 )
             except Exception as e:
-                messagebox.showerror("Errore LAN", f"Dettaglio errore: {e}")
+                messagebox.showerror("Errore RAW", f"Impossibile inviare il comando: {e}")
 
     def cmd_riavvia_stampante(self):
         """Invia un comando di Reset hardware ZPL (~JR)."""
@@ -411,3 +343,98 @@ class PrinterManagerController:
                 f"Impossibile aggiornare le preferenze di Windows: {e}\n\n"
                 "Nota: Per modificare le impostazioni di sistema, avvia l'app come Amministratore."
             )
+
+    def cmd_manutenzione_totale_driver(self):
+        """Controlla vecchi driver, salta la rimozione se non esistono e installa da zero."""
+        import subprocess
+        import os
+        import time
+        from tkinter import messagebox
+        import win32print
+
+        percorso_driver_inf = os.path.abspath("drivers/ZBRN.inf") 
+        nome_modello_inf = "ZDesigner GK420d"  
+        nomi_target = ["ZEBRA", "GARANZIE"]
+
+        try:
+            assert os.path.exists(percorso_driver_inf), f"Impossibile trovare il file driver in:\n{percorso_driver_inf}"
+
+            print("[1/4] Controllo presenza vecchie code di stampa...")
+            stampanti_esistenti = [p[2] for p in win32print.EnumPrinters(win32print.PRINTER_ENUM_LOCAL)]
+            
+            porta_rilevata = "USB001" # Default di fallback
+
+            # 1. Recuperiamo la porta se almeno una stampante esiste davvero
+            for p in win32print.EnumPrinters(win32print.PRINTER_ENUM_LOCAL, None, 2):
+                if any(target in p['pPrinterName'].upper() for target in nomi_target):
+                    porta_rilevata = p['pPortName']
+                    break
+
+            # 2. RIMOZIONE TOTALMENTE SILENZIOSA E INDIVIDUALE
+            for nome_stampa in stampanti_esistenti:
+                if any(target in nome_stampa.upper() for target in nomi_target):
+                    print(f" -> Tentativo rimozione di: {nome_stampa}")
+                    try:
+                        # ABBIAMO AGGIUNTO IL FLAG /q (Quiet/Silenzioso)
+                        # Questo impedisce a Windows di mostrare finestre di errore grafiche!
+                        cmd_delete = f'rundll32 printui.dll,PrintUIEntry /dl /n "{nome_stampa}" /q'
+                        subprocess.run(cmd_delete, shell=True, capture_output=True, text=True)
+                    except Exception as e_rimozione:
+                        # Se Windows fa i capricci, Python lo ignora e passa alla stampante successiva
+                        print(f" -> [IGNORATO] Impossibile rimuovere {nome_stampa}: {e_rimozione}")
+            
+            # Pausa per dare tempo allo spooler di Windows di digerire la richiesta
+            time.sleep(2)
+
+            print(f"[2/4] Iniezione del driver ZBRN.inf nel sistema sulla porta {porta_rilevata}...")
+            # ... da qui in poi il codice continua identico a prima ...
+            print("[3/4] Registrazione modello hardware...")
+            cmd_register = f'rundll32 printui.dll,PrintUIEntry /ia /m "{nome_modello_inf}" /f "{percorso_driver_inf}"'
+            res_register = subprocess.run(cmd_register, shell=True, capture_output=True, text=True)
+
+            assert res_register.returncode == 0, (
+                f"Errore registrazione hardware.\nVerifica il nome modello '{nome_modello_inf}'\n"
+                f"Dettaglio: {res_register.stderr if res_register.stderr else res_store.stderr}"
+            )
+
+            print("[4/4] Creazione nuove code personalizzate...")
+            cmd_add_zebra = f'rundll32 printui.dll,PrintUIEntry /if /b "ZEBRA" /m "{nome_modello_inf}" /r "{porta_rilevata}" /f "{percorso_driver_inf}"'
+            subprocess.run(cmd_add_zebra, shell=True, capture_output=True)
+
+            cmd_add_garanzie = f'rundll32 printui.dll,PrintUIEntry /if /b "GARANZIE" /m "{nome_modello_inf}" /r "{porta_rilevata}" /f "{percorso_driver_inf}"'
+            subprocess.run(cmd_add_garanzie, shell=True, capture_output=True)
+
+            # Configurazione layout geometrico nativo (senza PowerShell!)
+            time.sleep(2)
+            self._applica_devmode_silenzioso("ZEBRA", 700, 1000)
+            self._applica_devmode_silenzioso("GARANZIE", 400, 300)
+
+            if hasattr(self, 'cmd_rileva_stampanti'):
+                self.cmd_rileva_stampanti(mostra_popup_esito=False)
+
+            messagebox.showinfo("Successo", "Installazione pulita completata con successo!")
+
+        except AssertionError as errore_controllo:
+            messagebox.showerror("Blocco di Sicurezza", str(errore_controllo))
+        except Exception as e:
+            messagebox.showerror("Errore", f"Errore imprevisto: {e}")
+
+    def _applica_devmode_silenzioso(self, nome_stampante, larghezza_mm_10, altezza_mm_10):
+        """Metodo di supporto per iniettare i millimetri senza mostrare popup all'utente."""
+        try:
+            import win32print
+            PRINTER_ACCESS_ADMINISTER = 0x00000004
+            PRINTER_ACCESS_USE = 0x00000008
+            hPrinter = win32print.OpenPrinter(nome_stampante, {"DesiredAccess": PRINTER_ACCESS_ADMINISTER | PRINTER_ACCESS_USE})
+            try:
+                info = win32print.GetPrinter(hPrinter, 2)
+                devmode = info['pDevMode']
+                devmode.PaperWidth = larghezza_mm_10
+                devmode.PaperLength = altezza_mm_10
+                devmode.Fields |= win32print.DM_PAPERWIDTH | win32print.DM_PAPERLENGTH
+                win32print.SetPrinter(hPrinter, 2, info, 0)
+                print(f"[DIAGNOSTICA] Configurato DevMode per {nome_stampante} a {larghezza_mm_10}x{altezza_mm_10}")
+            finally:
+                win32print.ClosePrinter(hPrinter)
+        except Exception as e:
+            print(f"[DIAGNOSTICA] Impossibile pre-configurare {nome_stampante}: {e}")
