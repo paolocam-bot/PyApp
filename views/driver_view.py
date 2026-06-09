@@ -19,23 +19,16 @@ class DriverView(ctk.CTkFrame):
         )
         self.label_sottotitolo.pack(pady=5)
 
-        # --- PULSANTE 1: STAMPANTE ZEBRA ---
-        self.btn_zebra = ctk.CTkButton(
-            self, 
-            text="Sblocca / Ripristina Stampante Zebra", 
-            font=("Arial", 14, "bold"),
-            fg_color="#1f538d", # Colore blu standard
-            height=45,
-            width=300
-        )
-        self.btn_zebra.pack(pady=15)
+        # Contenitore per i pulsanti (per mantenerli ordinati e centrati)
+        self.button_container = ctk.CTkFrame(self, fg_color="transparent")
+        self.button_container.pack(pady=10)
 
-        # --- PULSANTE 2: TASTIERA E MOUSE (NUOVO) ---
+        # --- SEZIONE INPUT HARDWARE (Ex Pulsante 2, ora unico rimasto qui) ---
         self.btn_input = ctk.CTkButton(
-            self, 
+            self.button_container, 
             text="Sblocca Tastiera o Mouse Bloccati", 
             font=("Arial", 14, "bold"),
-            fg_color="#2b712b", # Un bel verde per differenziarlo dalla stampante
+            fg_color="#2b712b", 
             hover_color="#1e4e1e",
             height=45,
             width=300
