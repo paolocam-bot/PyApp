@@ -76,6 +76,16 @@ class FrameGestioneStampante(ctk.CTkFrame):
         )
         self.btn_scambia_porte.pack(pady=10, fill="x", padx=40)
 
+    # --- NUOVO PULSANTE DI AVVERTIMENTO ---
+        self.btn_non_cliccare = ctk.CTkButton(
+            master=self.frame_azioni,
+            text="⚠️ Non cliccare",
+            fg_color="#ef4444", # Rosso vivido per dare un tono di avvertimento
+            hover_color="#dc2626",
+            font=("Arial", 12, "bold"),
+            command=lambda: self.controller.noncliccare() if self.controller else None
+        )
+        self.btn_non_cliccare.pack(pady=10, fill="x", padx=40)
         
     def get_dati_interfaccia(self):
         """Restituisce il target selezionato e deduce il tipo in base al testo."""
