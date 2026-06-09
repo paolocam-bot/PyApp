@@ -62,7 +62,7 @@ class FrameGestioneStampante(ctk.CTkFrame):
             master=self.frame_azioni,  
             text="📐 Applica Formato Fustella",
             fg_color="#2563eb",
-            command=lambda: self.controller.cmd_applica_formato_fustella() if self.controller else None
+            command=lambda: self.controller.setta_formato_zebra_etichette() if self.controller else None
         )
         self.btn_imposta_fustella.pack(pady=10, fill="x", padx=40)
 

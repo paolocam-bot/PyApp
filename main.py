@@ -1,14 +1,22 @@
 import os
 import sys
+import multiprocessing
 
-# Trova la cartella Root del progetto (HelpDeskApp)
-root_dir = os.path.dirname(os.path.abspath(__file__))
+# 1. FIX MULTIPROCESSING PER ESEGUIBILI (Obbligatorio per Nuitka/PyInstaller)
+if __name__ == '__main__':
+    multiprocessing.freeze_support()
 
-# Aggiunge la Root a sys.path per gestire gli import in modo assoluto
+# 2. GESTIONE PERCORSI INTELLIGENTE
+# Se l'app gira come .exe compilato, usa il percorso dell'eseguibile, altrimenti usa __file__
+if hasattr(sys, 'frozen'):
+    root_dir = os.path.dirname(sys.executable)
+else:
+    root_dir = os.path.dirname(os.path.abspath(__file__))
+
 if root_dir not in sys.path:
     sys.path.append(root_dir)
 
-# Ora possiamo importare dai vari pacchetti in modo pulito
+# Ora gli import funzioneranno sia in DEV che nel .exe compilato
 from views.main_view import HelpDeskView
 from controllers.main_controller import HelpDeskController
 

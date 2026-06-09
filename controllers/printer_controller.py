@@ -1,6 +1,9 @@
 import concurrent.futures
 import socket
 import threading
+import win32print
+import win32api
+import win32con
 from tkinter import messagebox
 from zebra import Zebra
 
@@ -345,79 +348,46 @@ class PrinterManagerController:
             )
 
     def cmd_manutenzione_totale_driver(self):
-        """Controlla vecchi driver, salta la rimozione se non esistono e installa da zero."""
-        import subprocess
-        import os
-        import time
-        from tkinter import messagebox
-        import win32print
-
-        percorso_driver_inf = os.path.abspath("drivers/ZBRN.inf") 
-        nome_modello_inf = "ZDesigner GK420d"  
-        nomi_target = ["ZEBRA", "GARANZIE"]
-
         try:
-            assert os.path.exists(percorso_driver_inf), f"Impossibile trovare il file driver in:\n{percorso_driver_inf}"
-
-            print("[1/4] Controllo presenza vecchie code di stampa...")
+            print("[1/5] Pulizia vecchie stampanti Zebra...")
+            # 1. Cancelliamo le vecchie code per evitare conflitti di nome
             stampanti_esistenti = [p[2] for p in win32print.EnumPrinters(win32print.PRINTER_ENUM_LOCAL)]
-            
-            porta_rilevata = "USB001" # Default di fallback
-
-            # 1. Recuperiamo la porta se almeno una stampante esiste davvero
-            for p in win32print.EnumPrinters(win32print.PRINTER_ENUM_LOCAL, None, 2):
-                if any(target in p['pPrinterName'].upper() for target in nomi_target):
-                    porta_rilevata = p['pPortName']
-                    break
-
-            # 2. RIMOZIONE TOTALMENTE SILENZIOSA E INDIVIDUALE
             for nome_stampa in stampanti_esistenti:
-                if any(target in nome_stampa.upper() for target in nomi_target):
-                    print(f" -> Tentativo rimozione di: {nome_stampa}")
-                    try:
-                        # ABBIAMO AGGIUNTO IL FLAG /q (Quiet/Silenzioso)
-                        # Questo impedisce a Windows di mostrare finestre di errore grafiche!
-                        cmd_delete = f'rundll32 printui.dll,PrintUIEntry /dl /n "{nome_stampa}" /q'
-                        subprocess.run(cmd_delete, shell=True, capture_output=True, text=True)
-                    except Exception as e_rimozione:
-                        # Se Windows fa i capricci, Python lo ignora e passa alla stampante successiva
-                        print(f" -> [IGNORATO] Impossibile rimuovere {nome_stampa}: {e_rimozione}")
+                if "ZEBRA" in nome_stampa.upper():
+                    print(f"Rimozoione vecchia coda: {nome_stampa}")
+                    subprocess.run(f'rundll32 printui.dll,PrintUIEntry /dl /n "{nome_stampa}" /q', shell=True)
             
-            # Pausa per dare tempo allo spooler di Windows di digerire la richiesta
             time.sleep(2)
 
-            print(f"[2/4] Iniezione del driver ZBRN.inf nel sistema sulla porta {porta_rilevata}...")
-            # ... da qui in poi il codice continua identico a prima ...
-            print("[3/4] Registrazione modello hardware...")
-            cmd_register = f'rundll32 printui.dll,PrintUIEntry /ia /m "{nome_modello_inf}" /f "{percorso_driver_inf}"'
-            res_register = subprocess.run(cmd_register, shell=True, capture_output=True, text=True)
+            # 2. Installazione del driver nel sistema tramite PNPUTIL
+            percorso_driver_inf = os.path.abspath("drivers/ZBRN.inf")
+            print("[2/5] Iniezione driver ZBRN.inf nel sistema...")
+            subprocess.run(f'pnputil /add-driver "{percorso_driver_inf}" /install', shell=True, capture_output=True)
 
-            assert res_register.returncode == 0, (
-                f"Errore registrazione hardware.\nVerifica il nome modello '{nome_modello_inf}'\n"
-                f"Dettaglio: {res_register.stderr if res_register.stderr else res_store.stderr}"
-            )
+            # Il nome esatto del modello scritto dentro il file .inf (es. "Zebra ZD220")
+            NOME_MODELLO_DRIVER = "Zebra ZD220" 
 
-            print("[4/4] Creazione nuove code personalizzate...")
-            cmd_add_zebra = f'rundll32 printui.dll,PrintUIEntry /if /b "ZEBRA" /m "{nome_modello_inf}" /r "{porta_rilevata}" /f "{percorso_driver_inf}"'
-            subprocess.run(cmd_add_zebra, shell=True, capture_output=True)
+            # 3. Creazione delle due code distinte su porte diverse (USB001 e USB002)
+            print("[3/5] Creazione delle nuove code di stampa differenziate...")
+            
+            # Coda 1: ETICHETTE sulla porta USB001
+            cmd_crea_etichette = f'rundll32 printui.dll,PrintUIEntry /if /b "Zebra Etichette" /f "{percorso_driver_inf}" /r "USB001" /m "{NOME_MODELLO_DRIVER}"'
+            subprocess.run(cmd_crea_etichette, shell=True)
 
-            cmd_add_garanzie = f'rundll32 printui.dll,PrintUIEntry /if /b "GARANZIE" /m "{nome_modello_inf}" /r "{porta_rilevata}" /f "{percorso_driver_inf}"'
-            subprocess.run(cmd_add_garanzie, shell=True, capture_output=True)
+            # Coda 2: GARANZIE sulla porta USB002
+            cmd_crea_garanzie = f'rundll32 printui.dll,PrintUIEntry /if /b "Zebra Garanzie" /f "{percorso_driver_inf}" /r "USB002" /m "{NOME_MODELLO_DRIVER}"'
+            subprocess.run(cmd_crea_garanzie, shell=True)
 
-            # Configurazione layout geometrico nativo (senza PowerShell!)
             time.sleep(2)
-            self._applica_devmode_silenzioso("ZEBRA", 700, 1000)
-            self._applica_devmode_silenzioso("GARANZIE", 400, 300)
 
-            if hasattr(self, 'cmd_rileva_stampanti'):
-                self.cmd_rileva_stampanti(mostra_popup_esito=False)
+            # 4. CONFIGURAZIONE FORMATO FOGLIO (Solo per "Zebra Etichette")
+            print("[4/5] Configurazione formato pagina 7x10 Landscape per Zebra Etichette...")
+            setta_formato_zebra_etichette("Zebra Etichette")
+            
+            print("[5/5] Manutenzione completata con successo!")
 
-            messagebox.showinfo("Successo", "Installazione pulita completata con successo!")
-
-        except AssertionError as errore_controllo:
-            messagebox.showerror("Blocco di Sicurezza", str(errore_controllo))
         except Exception as e:
-            messagebox.showerror("Errore", f"Errore imprevisto: {e}")
+            print(f"Errore durante la manutenzione: {e}")
 
     def _applica_devmode_silenzioso(self, nome_stampante, larghezza_mm_10, altezza_mm_10):
         """Metodo di supporto per iniettare i millimetri senza mostrare popup all'utente."""
@@ -438,3 +408,76 @@ class PrinterManagerController:
                 win32print.ClosePrinter(hPrinter)
         except Exception as e:
             print(f"[DIAGNOSTICA] Impossibile pre-configurare {nome_stampante}: {e}")
+
+    def cmd_scambia_porte_zebra(self):
+    # Sposta Etichette su USB002 e Garanzie su USB001
+        subprocess.run('rundll32 printui.dll,PrintUIEntry /Xs /n "Zebra Etichette" PortName "USB002"', shell=True)
+        subprocess.run('rundll32 printui.dll,PrintUIEntry /Xs /n "Zebra Garanzie" PortName "USB001"', shell=True)
+        print("Porte delle stampanti invertite con successo!")
+    
+    def setta_formato_zebra_etichette(self):
+        try:
+            # 1. Recupera l'elenco di TUTTE le stampanti installate su questo PC
+            lista_stampanti = [p[2] for p in win32print.EnumPrinters(win32print.PRINTER_ENUM_LOCAL)]
+            # Crea una lista in maiuscolo per fare i controlli di sicurezza
+            lista_maiuscola = [nome.strip().upper() for nome in lista_stampanti]
+            
+            print(f"[Scanner] Stampanti rilevate sul PC: {lista_stampanti}")
+
+            # =====================================================================
+            # CONTROLLO E CONFIGURAZIONE PER "ZEBRA" (Etichette 7x10)
+            # =====================================================================
+            if "ZEBRA" in lista_maiuscola:
+                idx = lista_maiuscola.index("ZEBRA")
+                nome_reale = lista_stampanti[idx]
+                print(f"[Configurazione] Trovata '{nome_reale}'. Applico formato 7x10cm Landscape...")
+                
+                try:
+                    p_handle = win32print.OpenPrinter(nome_reale, {"DesiredAccess": win32print.PRINTER_ALL_ACCESS})
+                    info = win32print.GetPrinter(p_handle, 2)
+                    devmode = info['pDevMode']
+                    
+                    devmode.Fields |= (win32con.DM_ORIENTATION | win32con.DM_PAPERSIZE | win32con.DM_PAPERWIDTH | win32con.DM_PAPERLENGTH)
+                    devmode.Orientation = win32con.DMORIENT_LANDSCAPE
+                    devmode.PaperSize = 0  
+                    devmode.PaperWidth = 700   # 7 cm
+                    devmode.PaperLength = 1000 # 10 cm
+                    
+                    win32print.SetPrinter(p_handle, 2, info, 0)
+                    win32print.ClosePrinter(p_handle)
+                    print(f" -> OK: Configurazione '{nome_reale}' completata.")
+                except Exception as e:
+                    print(f"[AVVISO] Impossibile configurare {nome_reale} (forse è offline): {e}")
+            else:
+                print("[Scanner] Stampante 'ZEBRA' non collegata al momento. Salto.")
+
+            # =====================================================================
+            # CONTROLLO E CONFIGURAZIONE PER "GARANZIE" (Garanzie 4x3)
+            # =====================================================================
+            if "GARANZIE" in lista_maiuscola:
+                idx = lista_maiuscola.index("GARANZIE")
+                nome_reale = lista_stampanti[idx]
+                print(f"[Configurazione] Trovata '{nome_reale}'. Applico formato 4x3cm Landscape...")
+                
+                try:
+                    p_handle = win32print.OpenPrinter(nome_reale, {"DesiredAccess": win32print.PRINTER_ALL_ACCESS})
+                    info = win32print.GetPrinter(p_handle, 2)
+                    devmode = info['pDevMode']
+                    
+                    devmode.Fields |= (win32con.DM_ORIENTATION | win32con.DM_PAPERSIZE | win32con.DM_PAPERWIDTH | win32con.DM_PAPERLENGTH)
+                    devmode.Orientation = win32con.DMORIENT_LANDSCAPE
+                    devmode.PaperSize = 0  
+                    devmode.PaperWidth = 400  # 4 cm
+                    devmode.PaperLength = 300 # 3 cm
+                    
+                    # QUI HO AGGIUNTO IL SALVATAGGIO CHE MANCAVA NEL TUO CODICE
+                    win32print.SetPrinter(p_handle, 2, info, 0)
+                    win32print.ClosePrinter(p_handle)
+                    print(f" -> OK: Configurazione '{nome_reale}' completata.")
+                except Exception as e:
+                    print(f"[AVVISO] Impossibile configurare {nome_reale} (forse è offline): {e}")
+            else:
+                print("[Scanner] Stampante 'GARANZIE' non collegata al momento. Salto.")
+
+        except Exception as e:
+            print(f"Errore generale nella routine di scansione: {e}")

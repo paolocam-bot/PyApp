@@ -81,7 +81,7 @@ pip install nuitka
 
 ### compilazione nuitka
 ```bash
-python -m nuitka --standalone --windowed --output-filename=HardwareHero --include-data-file=helpdesk.db=helpdesk.db --include-data-dir=assets=assets --include-data-dir=driver=driver --include-data-dir=scripts=scripts --windows-icon-from-ico=assets/app_icon.ico main.py
+python -m nuitka --standalone --windowed --windows-uac-admin --enable-plugin=tk-inter --include-package=customtkinter --include-package=PIL --output-filename=HardwareHero --include-data-file=helpdesk.db=helpdesk.db --include-data-dir=assets=assets --include-data-dir=drivers=drivers --include-data-dir=scripts=scripts --windows-icon-from-ico=assets/app_icon.ico main.py
 ```
 
 nuitka --standalone --onefile --windows-disable-console --include-data-dir=scripts=scripts --include-data-dir=drivers=drivers main.py
