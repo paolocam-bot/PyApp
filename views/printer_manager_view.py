@@ -24,8 +24,9 @@ class FrameGestioneStampante(ctk.CTkFrame):
         )
         self.cmb_dispositivo.pack(side="left", padx=10, fill="x", expand=True)
 
-        # --- CONTENITORE PULSANTI OPERATIVI ---
-        self.frame_azioni = ctk.CTkFrame(self)
+        # --- CONTENITORE PULSANTI OPERATIVI (CON SCROLLBAR INTEGRATA) ---
+        # Trasformato in CTkScrollableFrame per evitare il taglio dei bottoni inferiori
+        self.frame_azioni = ctk.CTkScrollableFrame(self, orientation="vertical")
         self.frame_azioni.pack(pady=15, padx=30, fill="both", expand=True)
         
         # Pulsante Scansione / Riconfigurazione manuale
@@ -52,7 +53,6 @@ class FrameGestioneStampante(ctk.CTkFrame):
             self.frame_azioni, 
             text="⚙️ Installa / Ripristina Driver Stampante", 
             fg_color="#4b5563",
-            # Allineato correttamente con gli altri parametri sopra
             command=lambda: self.controller.cmd_manutenzione_totale_driver() if self.controller else None
         )
         self.btn_installa_driver.pack(pady=(0, 15), fill="x", padx=40)
@@ -65,6 +65,16 @@ class FrameGestioneStampante(ctk.CTkFrame):
             command=lambda: self.controller.setta_formato_zebra_etichette() if self.controller else None
         )
         self.btn_imposta_fustella.pack(pady=10, fill="x", padx=40)
+
+        # --- SEZIONE SCAMBIA CONFIGURAZIONI ---
+        self.btn_scambia_porte = ctk.CTkButton(
+            master=self.frame_azioni,  
+            text="🔄 Scambia Configurazioni Porte",
+            fg_color="#ffe604",
+            text_color="black",
+            command=lambda: self.controller.cmd_scambia_porte_zebra() if self.controller else None
+        )
+        self.btn_scambia_porte.pack(pady=10, fill="x", padx=40)
 
         
     def get_dati_interfaccia(self):

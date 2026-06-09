@@ -4,6 +4,7 @@ import threading
 import win32print
 import win32api
 import win32con
+import subprocess
 from tkinter import messagebox
 from zebra import Zebra
 
@@ -409,11 +410,6 @@ class PrinterManagerController:
         except Exception as e:
             print(f"[DIAGNOSTICA] Impossibile pre-configurare {nome_stampante}: {e}")
 
-    def cmd_scambia_porte_zebra(self):
-    # Sposta Etichette su USB002 e Garanzie su USB001
-        subprocess.run('rundll32 printui.dll,PrintUIEntry /Xs /n "Zebra Etichette" PortName "USB002"', shell=True)
-        subprocess.run('rundll32 printui.dll,PrintUIEntry /Xs /n "Zebra Garanzie" PortName "USB001"', shell=True)
-        print("Porte delle stampanti invertite con successo!")
     
     def setta_formato_zebra_etichette(self):
         try:
@@ -481,3 +477,53 @@ class PrinterManagerController:
 
         except Exception as e:
             print(f"Errore generale nella routine di scansione: {e}")
+
+            import subprocess
+
+
+    def cmd_scambia_porte_zebra(self):
+        try:
+            print("[Port Manager] Controllo la posizione attuale delle porte USB...")
+            
+            # Usiamo il livello 2 per ottenere un dizionario completo e sicuro per ogni stampante
+            lista_stampanti = win32print.EnumPrinters(win32print.PRINTER_ENUM_LOCAL, None, 2)
+            
+            porta_attuale_zebra = None
+            porta_attuale_garanzie = None
+            
+            for stampante in lista_stampanti:
+                nome = stampante['pPrinterName'].strip().upper()
+                porta = stampante['pPortName'] 
+                
+                if nome == "ZEBRA":
+                    porta_attuale_zebra = porta.upper()
+                elif nome == "GARANZIE":
+                    porta_attuale_garanzie = porta.upper()
+
+            print(f"[Port Manager] Stato attuale -> ZEBRA: {porta_attuale_zebra} | GARANZIE: {porta_attuale_garanzie}")
+
+            # BLOCCO RIGIDO DI SICUREZZA: se non trova ENTRAMBE le stampanti, esce in modo pulito
+            if not porta_attuale_zebra or not porta_attuale_garanzie:
+                print("[AVVISO RIGIDO] Impossibile scambiare le porte: una delle due stampanti manca su Windows.")
+                return
+
+            # LOGICA DI INVERSIONE
+            if "USB001" in porta_attuale_zebra:
+                nuova_porta_zebra = "USB002"
+                nuova_porta_garanzie = "USB001"
+            else:
+                nuova_porta_zebra = "USB001"
+                nuova_porta_garanzie = "USB002"
+
+            print(f"[Port Manager] Applico lo scambio -> ZEBRA su {nuova_porta_zebra} | GARANZIE su {nuova_porta_garanzie}...")
+
+            res1 = subprocess.run(f'rundll32 printui.dll,PrintUIEntry /Xs /n "ZEBRA" PortName "{nuova_porta_zebra}"', shell=True, capture_output=True)
+            res2 = subprocess.run(f'rundll32 printui.dll,PrintUIEntry /Xs /n "GARANZIE" PortName "{nuova_porta_garanzie}"', shell=True, capture_output=True)
+
+            if res1.returncode == 0 and res2.returncode == 0:
+                print("Porte invertite con successo!")
+            else:
+                print("[ERRORE] Windows ha rifiutato lo scambio delle porte.")
+
+        except Exception as e:
+            print(f"Errore durante lo scambio delle porte USB: {e}")
