@@ -1,0 +1,46 @@
+[FileInfo]
+Base=ZEB2844
+Name=ZDesigner 888-DT
+
+[Defaults]
+PageWidth=762
+PageHeight=508
+Speed=83
+Darkness=7
+MediaType=0
+HDPI=203
+VDPI=203
+MCSlotType1=8
+MCSlotType2=0
+MCSlotType3=0
+MCSlotType4=0
+MCSlotSize1=512
+MCSlotSize2=0
+MCSlotSize3=0
+MCSlotSize4=0
+Switch7=0
+
+[ConstParams]
+PageOffset=0
+SpeedUnit="mm/s"
+MaxMediaWidth=0
+FixedHorzUA=0
+HorzUAMode=0
+RFIDSupport=0
+SpeedLimits=37,50,63,83
+DarknessLimits=0..15
+MaxWidth=1040
+MaxHeight=27900
+MinWidth=10
+MinHeight=10
+UseRibbonSaver=0
+CutEnabled=2
+
+[MemoryCards]
+MCSlot1=""Internal Memory",1024,8"
+MCSlot2=""Internal Flash",1024,2,EPLDL,EPLDL,"
+MCSlot3=""",0,0"
+MCSlot4=""",0,0"
+
+[ToolInfo]
+Tool0=ToolsEPL.dll

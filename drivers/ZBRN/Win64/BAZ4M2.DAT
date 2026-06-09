@@ -1,0 +1,45 @@
+[FileInfo]
+Base=ZES400
+Name=ZDesigner Z4M 300DPI
+
+[Defaults]
+PageWidth=762
+PageHeight=508
+Speed=4
+Darkness=15
+HDPI=300
+VDPI=300
+MediaType=0
+MCSlotType1=0
+MCSlotType2=0
+MCSlotType3=0
+MCSlotType4=0
+MCSlotSize1=0
+MCSlotSize2=0
+MCSlotSize3=0
+MCSlotSize4=0
+
+Switch7=0
+[ConstParams]
+PageOffset=0
+SpeedUnit=""/s"
+MaxMediaWidth=1143
+FixedHorzUA=0
+HorzUAMode=1
+RFIDSupport=0
+SpeedLimits="2..6"
+DarknessLimits="0..30"
+MaxWidth=1040
+MaxHeight=12450
+MinWidth=20
+MinHeight=20
+UseRibbonSaver=1
+
+[MemoryCards]
+MCSlot1=""DRAM",4096,2,ZEBRADL,ZEBRADL,"
+MCSlot2=""Flash",1024,2,ZEBRADL,ZEBRADL,"
+MCSlot3=""Memory Card",262144,2,ZEBRADL,ZEBRADL,"
+MCSlot4=""Compact Flash",524288,2,ZEBRADL,ZEBRADL,"
+
+[ToolInfo]
+Tool0=ToolsZPL.dll

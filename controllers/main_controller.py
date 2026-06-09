@@ -175,22 +175,62 @@ class HelpDeskController:
         self.view.vista_ticket.entry_titolo.delete(0, "end")
         self.view.vista_ticket.txt_descrizione.delete("0.0", "end")
 
-    def ripristina_driver_zebra(self):
-        cartella_root = os.path.dirname(os.path.abspath(sys.argv[0]))
-        # AGGIORNATO: puntiamo alla sottocartella scripts
-        percorso_bat = os.path.join(cartella_root, "scripts", "ZebraDriver.bat") 
-        
-        if not os.path.exists(percorso_bat):
-            messagebox.showerror("Errore", f"File '{percorso_bat}' non trovato!")
-            return
-            
+    def _esegui_singolo_comando_silenzioso(self, comando):
+        """Esegue un comando di sistema zittendo l'output per evitare i log invadenti dei driver."""
         try:
-            # Avvia il file .bat forzando la richiesta di Amministratore (UAC) tramite PowerShell
-            subprocess.Popen(["powershell", "-Command", f"Start-Process '{percorso_bat}' -Verb RunAs"], shell=True)
-            messagebox.showinfo("Driver", "Script avviato. Accetta la richiesta UAC di Windows.")
-        except Exception as e:
-            messagebox.showerror("Errore", f"Impossibile avviare lo script: {e}")
+            subprocess.run(
+                comando, 
+                shell=True, 
+                check=True, 
+                stdout=subprocess.DEVNULL, 
+                stderr=subprocess.DEVNULL
+            )
+            print(f"[OK] Comando completato: {comando}")
+        except subprocess.CalledProcessError as e:
+            print(f"[ERRORE] Fallito: {comando}", file=sys.stderr)
 
+    def ripristina_driver_zebra(self):
+        """Rimuove e ricrea da zero ENTRAMBE le code di stampa (ZEBRA e GARANZIE)."""
+        conferma = messagebox.askyesno(
+            "Conferma Ripristino", 
+            "Questa procedura rimuoverà e reinstallerà TUTTE le code Zebra (Etichette e Garanzie).\nVuoi procedere?"
+        )
+        if not conferma:
+            return
+
+        print("=== INIZIO MANUTENZIONE TOTALE DRIVER ZEBRA ===")
+
+        # 1. RIMOZIONE DELLE VECCHIE CODE (Se esistono)
+        print("Pulizia vecchie code di stampa...")
+        cmd_rimuovi_garanzie = 'rundll32 printui.dll,PrintUIEntry /dl /n "GARANZIE" /q'
+        cmd_rimuovi_zebra = 'rundll32 printui.dll,PrintUIEntry /dl /n "ZEBRA" /q'
+        
+        self._esegui_singolo_comando_silenzioso(cmd_rimuovi_garanzie)
+        self._esegui_singolo_comando_silenzioso(cmd_rimuovi_zebra)
+
+        # Percorso assoluto del driver INF
+        percorso_driver_inf = "C:\\Users\\PaoloCa\\Desktop\\Progetti_App\\PyApp\\drivers\\ZBRN\\Win64\\ZBRN.inf"
+        # Modello esatto del driver (Verifica se nel PC di Paolo serve "ZDesigner GK420d" o "Zebra ZD220")
+        NOME_MODELLO_DRIVER = "ZDesigner GK420d" 
+
+        # 2. CREAZIONE CODA "ZEBRA" (Porta USB001)
+        print("Installazione coda 'ZEBRA' su USB001...")
+        cmd_installa_zebra = (
+            f'rundll32 printui.dll,PrintUIEntry /if /b "ZEBRA" '
+            f'/f "{percorso_driver_inf}" /r "USB001" /m "{NOME_MODELLO_DRIVER}"'
+        )
+        self._esegui_singolo_comando_silenzioso(cmd_installa_zebra)
+
+        # 3. CREAZIONE CODA "GARANZIE" (Porta USB002)
+        print("Installazione coda 'GARANZIE' su USB002...")
+        cmd_installa_garanzie = (
+            f'rundll32 printui.dll,PrintUIEntry /if /b "GARANZIE" '
+            f'/f "{percorso_driver_inf}" /r "USB002" /m "{NOME_MODELLO_DRIVER}"'
+        )
+        self._esegui_singolo_comando_silenzioso(cmd_installa_garanzie)
+
+        print("=== FINE MANUTENZIONE: Entrambe le code sono pronte! ===")
+        messagebox.showinfo("HardwareHero", "Ripristino completato!\nLe code 'ZEBRA' e 'GARANZIE' sono state configurate.")
 
     def ripristina_input_hardware(self):
         cartella_root = os.path.dirname(os.path.abspath(sys.argv[0]))

@@ -1,0 +1,28 @@
+-10 0 Printer does not support bidirectional communication through the current port
+-9 0 Checking printer status...
+-8 0 Viewing printer report, status unavailable
+-7 0 Configuring printer settings, status unavailable
+-6 0 Initial check of printer status...
+-5 0 Printer busy
+-4 3 Printer in unknown mode, Errcode :
+-3 0 Printing...
+-2 0 Printing & buffering data...
+-1 5 Not accessible
+0 0 Online
+1 1 Syntax error
+2 1 Object exceeded label border
+3 1 Bar code data length error
+4 1 Insufficient memory to store data
+5 1 Memory configuration error
+6 1 RS-232 interface error
+7 1 Out od paper and/or ribbon
+8 1 Duplicate name: Form, Graphic or Soft Font
+9 1 Name not found: Form, Graphic or Soft Font
+10 1 Not in data entry mode
+11 1 Print head open
+12 0 Paused or paused in peel mode
+50 0 Printer busy - Processing print job
+81 1 Cutter jammed or not installed
+82 1 AutoSense or sensor failure
+83 1 Illegal interrupt occurred
+84 1 Excessive media feeding
