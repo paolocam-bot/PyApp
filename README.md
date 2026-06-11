@@ -84,5 +84,5 @@ pip install nuitka
 python -m nuitka --standalone --windows-console-mode=disable --windows-uac-admin --enable-plugin=tk-inter --include-package=customtkinter --output-filename=HardwareHero --include-data-file="helpdesk.db=helpdesk.db" --include-data-dir="assets=assets" --include-data-dir="drivers=drivers" --include-data-dir="scripts=scripts" --windows-icon-from-ico=assets/app_icon.ico main.py
 ```
 
-![Logo Applicazione](assets/app_ico.png)
+![Logo Applicazione](assets/app_icon.png)
 ![Screen](.HH.png)
