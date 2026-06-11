@@ -9,7 +9,7 @@ def main():
     app_temporanea.withdraw() # Nasconde la finestra principale vuota
 
     # Impostiamo la password corretta
-    PASSWORD_CORRETTA = "Paolo98"
+    PASSWORD_CORRETTA = "paolo98"
 
     # Mostriamo il popup di richiesta password
     dialogo = ctk.CTkInputDialog(

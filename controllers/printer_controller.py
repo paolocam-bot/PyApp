@@ -305,11 +305,20 @@ class PrinterManagerController:
         if not target or "Nessuna" in target:
             messagebox.showwarning("Azione Annullata", "Nessuna stampante selezionata.")
             return
-
         if "GARANZIE" in target.upper():
-            stringa_zpl = "^XA^FO20,20^GB280,200,4^FS^FO50,90^A0N,40,40^FDGARANZIE OK^FS^XZ"
+    # ^LL240 -> Forza l'altezza dell'etichetta a esattamente 3 cm (240 punti)
+    # ^PW320 -> Forza la larghezza di stampa a esattamente 4 cm (320 punti)
+    # ^GB300,220,4 -> Il rettangolo ora copre quasi tutta l'etichetta (lascia 10 punti di margine per lato)
+            stringa_zpl = (
+                "^XA^LL240^PW320"
+                "^FO10,10^GB300,220,4^FS"
+                "^FO10,50^A0N,30,30^FB300,3,,C"
+                "^FDBuon lavoro\&da paolo\&:P^FS^XZ"
+    )
         else:
-            stringa_zpl = "^XA^FO40,40^GB480,720,4^FS^FO80,350^A0N,60,60^FDZEBRA 7x10 OK^FS^XZ"
+            # FUSTELLA GRANDE: Margine 40, Larghezza rettangolo 480 -> Fine rettangolo a 520.
+            # TESTO: Parte a 40 (preciso con la fustella) e lo facciamo largo 480 (^FB480).
+            stringa_zpl = "^XA^FO40,40^GB480,720,4^FS^FO40,280^A0N,55,55^FB480,3,,C^FDBuon lavoro\&da paolo\&:P^FS^XZ"
 
         if tipo == "USB":
             try:
