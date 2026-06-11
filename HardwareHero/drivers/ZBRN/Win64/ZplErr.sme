@@ -1,0 +1,20 @@
+-10 0 Printer does not support bidirectional communication through the current port
+-9 0 Checking printer status...
+-8 0 Viewing printer report, status unavailable
+-7 0 Configuring printer settings, status unavailable
+-6 0 Initial check of printer status...
+-5 0 Printer busy
+-4 3 Printer in unknown mode, Errcode :
+-3 0 Printing...
+-2 0 Printing & buffering data...
+-1 5 Not accessible
+0 0 Online
+1 3 Pause
+2 1 Out of paper
+3 1 Buffer full
+4 1 Communications diagnostic mode
+5 1 Partial format
+6 1 Corrupt memory
+7 1 Print head open
+8 1 Out of ribbon
+9 3 Label waiting

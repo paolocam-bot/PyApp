@@ -1,0 +1,43 @@
+-10 0 Printer does not support bidirectional communication through the current port
+-9 0 Checking printer status...
+-8 0 Viewing printer report, status unavailable
+-7 0 Configuring printer settings, status unavailable
+-6 0 Initial check of printer status...
+-5 0 Printer busy
+-4 3 Printer in unknown mode, Errcode :
+-3 0 Printing...
+-2 0 Printing & buffering data...
+-1 5 Not accessible
+0 0 Online
+1 4 Error
+2 1 Printhead Thermistor Open
+3 1 Invalid Firmware Configuration
+4 1 Printhead Detection Error
+5 1 Bad Printhead Element
+6 1 Motor Over Temperature
+7 1 Printhead Over Temperature
+8 1 Cutter Fault
+9 1 Head Opened
+10 1 Ribbon Out
+11 1 Media Out
+12 1 Clear Paper Path Failed
+13 1 Paper Feed Error
+14 1 Presenter Not Running
+15 1 Paper Jam during Retract
+16 1 Black Mark not Found
+17 1 Black Mark Calibrate Error
+18 1 Retract Function timed out
+19 3 Paused
+100 4 Error
+101 3 Paper near end
+102 3 Replace PrintHead
+103 3 Clean PrintHead
+104 3 Need to Calibrate Media
+105 0 Paper before Head
+106 0 Black Mark
+107 0 Paper after head
+108 0 loop ready
+109 0 presenter
+110 0 retract ready
+111 0 in retract
+112 0 at bin
