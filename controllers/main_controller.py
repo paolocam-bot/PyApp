@@ -5,12 +5,14 @@ import subprocess
 import shutil
 from tkinter import messagebox
 from tkinter import messagebox
+from controllers.launchInstaller import PrinterManagerController
 from models.ticket_model import Ticket
 from models.manuale_model import Problema, StepRisoluzione
 
 class HelpDeskController:
     def __init__(self, view):
         self.view = view
+        self.printer_manager = PrinterManagerController()
         
         # 1. Gestione dinamica del percorso del Database
         if getattr(sys, 'frozen', False):
@@ -243,6 +245,9 @@ class HelpDeskController:
 
         print("=== FINE MANUTENZIONE: Entrambe le code sono pronte! ===")
         messagebox.showinfo("HardwareHero", "Ripristino completato!\nLe code 'ZEBRA' e 'GARANZIE' sono state configurate.")
+
+    def aggiorna_app(self):
+        launcher_aggiorna_app()
 
     def ripristina_input_hardware(self):
         cartella_root = os.path.dirname(os.path.abspath(sys.argv[0]))
@@ -506,6 +511,16 @@ class HelpDeskController:
                 
             except Exception as e:
                 messagebox.showerror("Errore", f"Impossibile eliminare lo step: {e}")
+
+    def cmd_pulizia_spooler_stampa(self):
+        """Metodo ponte richiesto dalla DriverView"""
+        print("[BRIDGE] Reindirizzamento chiamata a PrinterManagerController...")
+        self.printer_manager.cmd_pulizia_spooler_stampa()
+
+    def cmd_refresh_internet_sicuro(self):
+        """Metodo ponte richiesto dalla DriverView"""
+        print("[BRIDGE] Reindirizzamento chiamata a PrinterManagerController...")
+        self.printer_manager.cmd_refresh_internet_sicuro()
 
 
     

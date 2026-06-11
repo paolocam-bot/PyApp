@@ -89,7 +89,11 @@ class HelpDeskView(ctk.CTk):
         """Collega le funzioni dei controller ai pulsanti delle sotto-viste (Anche quelle nascoste)."""
         
         # 1. Collegamenti del Main Controller (Pagine standard e nascoste)
+        self.vista_driver.controller = controller
+        self.vista_driver.btn_spooler.configure(command=controller.cmd_pulizia_spooler_stampa)
+        self.vista_driver.btn_refresh_rete.configure(command=controller.cmd_refresh_internet_sicuro)
         self.vista_driver.btn_input.configure(command=controller.ripristina_input_hardware)
+        self.vista_driver.btn_aggiornamento.configure(command=controller.aggiorna_app)
         self.vista_manuale.inizialiale_manuale = self.vista_manuale.inizializza_manuale(controller)
         
         # L'Admin mantiene tutti i suoi binding attivi in background per lo sviluppo
