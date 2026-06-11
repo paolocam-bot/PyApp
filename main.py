@@ -9,7 +9,7 @@ def main():
     app_temporanea.withdraw() # Nasconde la finestra principale vuota
 
     # Impostiamo la password corretta
-    PASSWORD_CORRETTA = "HardwareHero2026" 
+    PASSWORD_CORRETTA = "Hh26"
 
     # Mostriamo il popup di richiesta password
     dialogo = ctk.CTkInputDialog(

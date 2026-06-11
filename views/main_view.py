@@ -3,7 +3,7 @@ import os
 import sys
 from PIL import Image, ImageTk
 
-# Importiamo le viste separate che risiedono nella stessa cartella
+# Manteniamo tutti gli import intatti per non rompere la logica del progetto
 from views.manuale_view import ManualeView
 from views.ticket_view import TicketView
 from views.driver_view import DriverView
@@ -22,23 +22,18 @@ class HelpDeskView(ctk.CTk):
         
         # --- GESTIONE ICONA COMPATIBILE SVILUPPO E COMPILAZIONE (NUITKA) ---
         try:
-            # Rileviamo la directory radice del progetto in modo sicuro
             if getattr(sys, 'frozen', False):
-                # Se l'app è compilata (eseguibile), la cartella base è quella del file .exe
                 cartella_base = os.path.dirname(sys.executable)
             else:
-                # Se siamo in sviluppo (python main.py), la cartella base è la root di PyApp
                 cartella_base = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
             if sys.platform.startswith("win"):
-                # Costruiamo il percorso assoluto verso la cartella assets per l'icona .ico
                 percorso_ico = os.path.join(cartella_base, "assets", "app_icon.ico")
                 if os.path.exists(percorso_ico):
                     self.wm_iconbitmap(percorso_ico)
                 else:
                     print(f"[NOTA] Icona .ico non trovata nel percorso: {percorso_ico}")
             else:
-                # Fallback per sistemi Mac/Linux con file .png
                 percorso_png = os.path.join(cartella_base, "assets", "app_icon.png")  
                 if os.path.exists(percorso_png):
                     img_aperta = Image.open(percorso_png)
@@ -63,28 +58,26 @@ class HelpDeskView(ctk.CTk):
         self.tabview = ctk.CTkTabview(self, width=830, height=600, command=self.rilevato_cambio_tab)
         self.tabview.pack(pady=10, padx=10, fill="both", expand=True)
         
-        # 3. Aggiungiamo le schede nell'ordine desiderato
-        self.tab_manuale = self.tabview.add("Manuale di Risoluzione")
+        # 3. CREAZIONE DELLE SCHEDE VISIBILI ALL'UTENTE FINALE
+        # Abbiamo rimosso .add("Manuale di Risoluzione") e .add("Admin")
         self.tab_driver = self.tabview.add("Risoluzione Problemi")
         self.tab_stampanti = self.tabview.add("Gestione Stampante")
-        self.tab_admin = self.tabview.add("Admin")
         
-        # 4. Inizializziamo le sotto-viste dentro i rispettivi tab
-        self.vista_manuale = ManualeView(self.tab_manuale)
-        self.vista_manuale.pack(fill="both", expand=True)
-        
+        # 4. INIZIALIZZAZIONE DELLE SOTTO-VISTE
+        # Inizializziamo Manuale e Admin passandogli 'self' invece del tab rimosso.
+        # In questo modo gli oggetti esistono in memoria ma l'utente non ha modo di vederli o cliccarli.
+        self.vista_manuale = ManualeView(self) 
         self.vista_driver = DriverView(self.tab_driver)
         self.vista_driver.pack(fill="both", expand=True)
 
-        # Inizializziamo il modulo di gestione stampante
         self.vista_stampanti = FrameGestioneStampante(self.tab_stampanti, None)
         self.vista_stampanti.pack(fill="both", expand=True)
 
-        self.vista_admin = AdminView(self.tab_admin)
-        self.vista_admin.pack(fill="both", expand=True)
+        self.vista_admin = AdminView(self)
 
-        # 5. FORZATURA: Seleziona la scheda del manuale come attiva all'avvio
-        self.tabview.set("Manuale di Risoluzione")
+        # 5. IMPOSTAZIONE SCHEDA ATTIVA ALL'AVVIO
+        # Cambiata la forzatura sulla prima scheda realmente visibile all'utente
+        self.tabview.set("Risoluzione Problemi")
 
     def rilevato_cambio_tab(self):
         """Esegue automaticamente i controlli hardware in background all'accesso della tab."""
@@ -93,12 +86,13 @@ class HelpDeskView(ctk.CTk):
             self.printer_controller.cmd_rileva_stampanti(mostra_popup_esito=False)
 
     def imposta_controller(self, controller):
-        """Collega le funzioni dei controller ai pulsanti delle sotto-viste."""
+        """Collega le funzioni dei controller ai pulsanti delle sotto-viste (Anche quelle nascoste)."""
         
-        # 1. Collegamenti del Main Controller (Pagine standard)
+        # 1. Collegamenti del Main Controller (Pagine standard e nascoste)
         self.vista_driver.btn_input.configure(command=controller.ripristina_input_hardware)
         self.vista_manuale.inizialiale_manuale = self.vista_manuale.inizializza_manuale(controller)
         
+        # L'Admin mantiene tutti i suoi binding attivi in background per lo sviluppo
         self.vista_admin.controller = controller
         self.vista_admin.btn_aggiungi.configure(command=controller.aggiungi_guida_db)
         self.vista_admin.btn_modifica.configure(command=controller.modifica_guida_db)
@@ -110,21 +104,16 @@ class HelpDeskView(ctk.CTk):
         self.printer_controller = PrinterManagerController(self.vista_stampanti)
         self.vista_stampanti.controller = self.printer_controller
         
-        # Mappatura del pulsante di Scansione Manuale
         self.vista_stampanti.btn_scan.configure(
             command=lambda: self.printer_controller.cmd_rileva_stampanti(mostra_popup_esito=True)
         )
         
-        # Mappatura dei pulsanti operativi standard della stampante
         self.vista_stampanti.btn_status.configure(command=self.printer_controller.cmd_click_status)
-        
         self.vista_stampanti.btn_allinea.configure(command=self.printer_controller.cmd_riallinea_stampante)
         self.vista_stampanti.btn_reboot.configure(command=self.printer_controller.cmd_riavvia_stampante)
         self.vista_stampanti.btn_test.configure(command=self.printer_controller.cmd_stampa_prova)
         
-        # Mappatura del bottone Driver riposizionato nel modulo stampante
         self.vista_stampanti.btn_installa_driver.configure(command=controller.ripristina_driver_zebra)
         
-        # Esegue un controllo immediato iniziale se l'app parte su questa scheda
         if self.tabview.get() == "Gestione Stampante":
             self.printer_controller.cmd_rileva_stampanti(mostra_popup_esito=False)

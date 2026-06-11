@@ -208,10 +208,22 @@ class HelpDeskController:
         self._esegui_singolo_comando_silenzioso(cmd_rimuovi_garanzie)
         self._esegui_singolo_comando_silenzioso(cmd_rimuovi_zebra)
 
-        # Percorso assoluto del driver INF
-        percorso_driver_inf = "C:\\Users\\PaoloCa\\Desktop\\Progetti_App\\PyApp\\drivers\\ZBRN\\Win64\\ZBRN.inf"
+        # Percorso dinamico del driver INF all'interno del progetto
+        if getattr(sys, 'frozen', False):
+            base_dir = os.path.dirname(sys.executable)
+        else:
+            base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+        percorso_driver_inf = os.path.join(base_dir, "drivers", "ZBRN", "Win64", "ZBRN.inf")
+        if not os.path.exists(percorso_driver_inf):
+            messagebox.showerror(
+                "Errore driver",
+                f"File driver non trovato: {percorso_driver_inf}\n\nVerifica che la cartella drivers\\ZBRN\\Win64 esista e contenga ZBRN.inf."
+            )
+            return
+
         # Modello esatto del driver (Verifica se nel PC di Paolo serve "ZDesigner GK420d" o "Zebra ZD220")
-        NOME_MODELLO_DRIVER = "ZDesigner GK420d" 
+        NOME_MODELLO_DRIVER = "ZDesigner GK420d"
 
         # 2. CREAZIONE CODA "ZEBRA" (Porta USB001)
         print("Installazione coda 'ZEBRA' su USB001...")

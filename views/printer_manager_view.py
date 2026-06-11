@@ -33,7 +33,13 @@ class FrameGestioneStampante(ctk.CTkFrame):
         self.btn_scan = ctk.CTkButton(self.frame_azioni, text="🔄 Riconfigura e Cerca Stampanti", fg_color="#6366f1", font=("Arial", 13, "bold"))
         self.btn_scan.pack(pady=(15, 10), fill="x", padx=40)
         
-        self.btn_status = ctk.CTkButton(self.frame_azioni, text="🔍 Verifica Stato Errori (Get Status)", fg_color="#1f538d")
+        # Modifica la riga aggiungendo il comando lambda che punta al controller
+        self.btn_status = ctk.CTkButton(
+            self.frame_azioni, 
+            text="🔍 Verifica Stato Errori (Get Status)", 
+            fg_color="#1f538d",
+            command=lambda: self.controller.cmd_click_status() if self.controller else None
+        )
         self.btn_status.pack(pady=10, fill="x", padx=40)
         
         self.btn_allinea = ctk.CTkButton(self.frame_azioni, text="📏 Riallinea Sensore (Calibrazione)", fg_color="#2b712b")
@@ -53,7 +59,7 @@ class FrameGestioneStampante(ctk.CTkFrame):
             self.frame_azioni, 
             text="⚙️ Installa / Ripristina Driver Stampante", 
             fg_color="#4b5563",
-            command=lambda: self.controller.cmd_manutenzione_totale_driver() if self.controller else None
+            command=lambda: self.controller.cmd_manutenzione_totale_driver_indipendente() if self.controller else None
         )
         self.btn_installa_driver.pack(pady=(0, 15), fill="x", padx=40)
 
