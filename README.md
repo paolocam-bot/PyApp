@@ -3,6 +3,9 @@
 Un'applicazione desktop intuitiva e leggera sviluppata in Python utilizzando **CustomTkinter** (interfaccia grafica moderna basata su Tkinter) basata sul pattern architetturale **MVC (Model-View-Controller)**. L'app offre un manuale di risoluzione rapida per i problemi IT aziendali (stampanti, rete, ecc.), un sistema di apertura ticket locale e un pannello amministratore protetto da password per la gestione (CRUD) delle guide direttamente dall'interfaccia.
 
 ---
+![Python Version](https://img.shields.io/badge/python-3.8%2B-blue)
+![License](https://img.shields.io/badge/license-MIT-green)
+![UI Framework](https://img.shields.io/badge/UI-CustomTkinter-darkblue)
 
 ## Guida Rapida alla Preparazione dell'Ambiente (`.venv`)
 
