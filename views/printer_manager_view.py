@@ -1,4 +1,5 @@
 import customtkinter as ctk
+from tkinter import messagebox
 
 class FrameGestioneStampante(ctk.CTkFrame):
     def __init__(self, parent, controller=None):
@@ -25,18 +26,16 @@ class FrameGestioneStampante(ctk.CTkFrame):
         self.cmb_dispositivo.pack(side="left", padx=10, fill="x", expand=True)
 
         # --- CONTENITORE PULSANTI OPERATIVI (CON SCROLLBAR INTEGRATA) ---
-        # Trasformato in CTkScrollableFrame per evitare il taglio dei bottoni inferiori
         self.frame_azioni = ctk.CTkScrollableFrame(self, orientation="vertical")
         self.frame_azioni.pack(pady=15, padx=30, fill="both", expand=True)
         
         # Pulsante Scansione / Riconfigurazione manuale
-        self.btn_scan = ctk.CTkButton(self.frame_azioni, text="🔄 Riconfigura e Cerca Stampanti", fg_color="#6366f1", font=("Arial", 13, "bold"))
+        self.btn_scan = ctk.CTkButton(self.frame_azioni, text="🔄 Cerca Stampanti", fg_color="#6366f1", font=("Arial", 13, "bold"))
         self.btn_scan.pack(pady=(15, 10), fill="x", padx=40)
         
-        # Modifica la riga aggiungendo il comando lambda che punta al controller
         self.btn_status = ctk.CTkButton(
             self.frame_azioni, 
-            text="🔍 Verifica Stato Errori (Get Status)", 
+            text="🔍 Verifica Stato Errori Windows", 
             fg_color="#1f538d",
             command=lambda: self.controller.cmd_click_status() if self.controller else None
         )
@@ -51,12 +50,28 @@ class FrameGestioneStampante(ctk.CTkFrame):
         self.btn_test = ctk.CTkButton(self.frame_azioni, text="📄 Effettua Stampa di Prova", fg_color="#d97706")
         self.btn_test.pack(pady=10, fill="x", padx=40)
 
+        # --- PULSANTE DI SBLOCCO AREA PROTETTA ---
+        self.btn_sblocca_admin = ctk.CTkButton(
+            self.frame_azioni, 
+            text="🔒 Sblocca Funzioni Avanzate (Richiede Password)", 
+            fg_color="#374151",
+            hover_color="#1f2937",
+            command=self.richiedi_sblocco_admin
+        )
+        self.btn_sblocca_admin.pack(pady=20, fill="x", padx=40)
+
+        # =====================================================================
+        # --- CONTAINER NASCOSTO: MANUTENZIONE AVANZATA (PROTEZIONE PASSWORD) ---
+        # =====================================================================
+        self.frame_avanzato_nascosto = ctk.CTkFrame(self.frame_azioni, fg_color="transparent")
+        # NOTA: Non facciamo il .pack() iniziale di questo frame per tenerlo nascosto
+
         # --- SEZIONE UTILITÀ (SPOSTAMENTO BOTTONE DRIVER) ---
-        self.lbl_driver_info = ctk.CTkLabel(self.frame_azioni, text="La stampante non viene rilevata in nessun modo?", font=("Arial", 11, "italic"), text_color="gray")
+        self.lbl_driver_info = ctk.CTkLabel(self.frame_avanzato_nascosto, text="La stampante non viene rilevata in nessun modo?", font=("Arial", 11, "italic"), text_color="gray")
         self.lbl_driver_info.pack(pady=(15, 2))
 
         self.btn_installa_driver = ctk.CTkButton(
-            self.frame_azioni, 
+            self.frame_avanzato_nascosto, 
             text="⚙️ Installa / Ripristina Driver Stampante", 
             fg_color="#4b5563",
             command=lambda: self.controller.cmd_manutenzione_totale_driver_indipendente() if self.controller else None
@@ -65,7 +80,7 @@ class FrameGestioneStampante(ctk.CTkFrame):
 
         # --- SEZIONE FORMATO FUSTELLA MODULARE ---
         self.btn_imposta_fustella = ctk.CTkButton(
-            master=self.frame_azioni,  
+            master=self.frame_avanzato_nascosto,  
             text="📐 Applica Formato Fustella",
             fg_color="#2563eb",
             command=lambda: self.controller.setta_formato_zebra_etichette() if self.controller else None
@@ -74,7 +89,7 @@ class FrameGestioneStampante(ctk.CTkFrame):
 
         # --- SEZIONE SCAMBIA CONFIGURAZIONI ---
         self.btn_scambia_porte = ctk.CTkButton(
-            master=self.frame_azioni,  
+            master=self.frame_avanzato_nascosto,  
             text="🔄 Scambia Configurazioni Porte",
             fg_color="#ffe604",
             text_color="black",
@@ -82,26 +97,34 @@ class FrameGestioneStampante(ctk.CTkFrame):
         )
         self.btn_scambia_porte.pack(pady=10, fill="x", padx=40)
 
-    # --- NUOVO PULSANTE DI AVVERTIMENTO ---
-        self.btn_non_cliccare = ctk.CTkButton(
-            master=self.frame_azioni,
-            text="⚠️ Non cliccare",
-            fg_color="#ef4444", # Rosso vivido per dare un tono di avvertimento
-            hover_color="#dc2626",
-            font=("Arial", 12, "bold"),
-            command=lambda: self.controller.noncliccare() if self.controller else None
-        )
-        self.btn_non_cliccare.pack(pady=10, fill="x", padx=40)
+    def richiedi_sblocco_admin(self):
+        """Mostra un input di testo per verificare i privilegi dell'operatore."""
+        PASSWORD_CORRETTA = "admingdv2026"
         
+        dialogo = ctk.CTkInputDialog(
+            text="Inserisci la password per sbloccare i tool di manutenzione:", 
+            title="Sblocco Funzioni Avanzate"
+        )
+        
+        password_inserita = dialogo.get_input()
+        
+        if password_inserita == PASSWORD_CORRETTA:
+            # Nascondiamo il bottone di sblocco
+            self.btn_sblocca_admin.pack_forget()
+            
+            # Mostriamo il contenitore con i 3 bottoni avanzati
+            self.frame_avanzato_nascosto.pack(pady=10, fill="x")
+            messagebox.showinfo("Sbloccato", "Funzioni di amministrazione caricate correttamente.")
+        elif password_inserita is not None:
+            messagebox.showerror("Errore", "Password non valida! Accesso negato.")
+
     def get_dati_interfaccia(self):
         """Restituisce il target selezionato e deduce il tipo in base al testo."""
         scelta = self.cmb_dispositivo.get().strip()
         
-        # Capiamo se è un IP o una stampante USB dal testo inserito dal controller
         tipo = "USB"
         if "(Rete IP)" in scelta:
             tipo = "IP"
-            # Puliamo la stringa tenendo solo l'IP numerico
             scelta = scelta.replace(" (Rete IP)", "")
         elif "(Cavo USB)" in scelta:
             tipo = "USB"

@@ -1,0 +1,1352 @@
+[Version]
+Signature="$Windows NT$"
+Provider="ZEBRA"
+ClassGUID={4D36E979-E325-11CE-BFC1-08002BE10318}
+Class=Printer
+CatalogFile=ZBRN32.cat
+DriverVer=09/14/2011,4.6.63.12
+
+[ClassInstall]
+AddReg=ClassAddReg
+DelReg=ClassDelReg
+
+[ClassDelReg]
+HKLM,"System\CurrentControlSet\Services\Class\Printer","NoUseClass"
+
+[ClassAddReg]
+HKR,,,,%CLASSNAME%
+HKR,,Installer,,MSPRINT.DLL
+HKR,,Icon,,-4
+HKR,,NoDisplayClass,,1
+
+[Environment]
+UpdateInis=Environment_Ini
+AddReg=Environment_Reg
+
+[Environment_Ini]
+win.ini,Ports,"LPT1.DOS=",
+win.ini,Ports,"LPT2.DOS=",
+win.ini,Ports,"LPT3.DOS=",
+win.ini,Ports,"LPT1.OS2=",
+win.ini,Ports,"LPT2.OS2=",
+win.ini,Ports,"LPT3.OS2=",
+win.ini,windows,"Spooler=",
+win.ini,windows,"DosPrint=",
+win.ini,windows,"DeviceNotSelectedTimeout=",
+win.ini,windows,"TransmissionRetryTimeout=",
+
+[Environment_Reg]
+HKLM,"System\CurrentControlSet\Control\Print\Environments\Windows 4.0","Directory",,"CHICAGO"
+HKLM,"System\CurrentControlSet\Control\Print\Environments\Windows 4.0\Drivers",,,
+HKLM,"System\CurrentControlSet\Control\Print\Environments\Windows 4.0\Print Processors",,,
+HKLM,"System\CurrentControlSet\Control\Print\Monitors",,,
+HKLM,"System\CurrentControlSet\Control\Print\Printers",,,
+HKLM,"System\CurrentControlSet\Control\Print\Printers","StartOnBoot",1,01,00,00,00
+HKLM,"System\CurrentControlSet\Control\Print\Providers",,,
+
+[Manufacturer]
+"ZDesigner"=ZDesigner
+
+[ZDesigner]
+"ZDesigner 105SL 203DPI" = BA105SL1,LPTENUM\Zebra_TechnologiesZT2771
+"ZDesigner 105SL 300DPI" = BA105SL2,LPTENUM\Zebra_TechnologiesZTF670
+"ZDesigner 110PAX3 203DPI" = BA110P31,LPTENUM\Zebra_TechnologiesZT996F,LPTENUM\Zebra_TechnologiesZT91EF
+"ZDesigner 110PAX3 300DPI" = BA110P32,LPTENUM\Zebra_TechnologiesZT486E,LPTENUM\Zebra_TechnologiesZT42EE
+"ZDesigner 110PAX3 600DPI" = BA110P33,LPTENUM\Zebra_TechnologiesZT1D6E,LPTENUM\Zebra_TechnologiesZT15EE
+"ZDesigner 110PAX4 203DPI" = BA110P41,LPTENUM\Zebra_TechnologiesZT9F91,LPTENUM\Zebra_TechnologiesZT3F10
+"ZDesigner 110PAX4 300DPI" = BA110P42,LPTENUM\Zebra_TechnologiesZT8F11,LPTENUM\Zebra_TechnologiesZT2F90
+"ZDesigner 110Xi4 203 dpi" = BA110XI42,LPTENUM\Zebra_TechnologiesZT4F6A,USBPRINT\Zebra_TechnologiesZT4F6A
+"ZDesigner 110Xi4 300 dpi" = BA110XI43,LPTENUM\Zebra_TechnologiesZT5F02,USBPRINT\Zebra_TechnologiesZT5F02
+"ZDesigner 110Xi4 600 dpi" = BA110XI46,LPTENUM\Zebra_TechnologiesZT8F6B,USBPRINT\Zebra_TechnologiesZT8F6B
+"ZDesigner 110XiIII Plus 200DPI" = BA110XI2,LPTENUM\Zebra_TechnologiesZTBACB,USBPRINT\Zebra_TechnologiesZTBACB
+"ZDesigner 110XiIII Plus 300DPI" = BA110XI3,LPTENUM\Zebra_TechnologiesZT6BCA,USBPRINT\Zebra_TechnologiesZT6BCA
+"ZDesigner 110XiIII Plus 600DPI" = BA110XI6,LPTENUM\Zebra_TechnologiesZT3ECA,USBPRINT\Zebra_TechnologiesZT3ECA
+"ZDesigner 140Xi4 203 dpi" = BA140XI42,LPTENUM\Zebra_TechnologiesZTDCD0,USBPRINT\Zebra_TechnologiesZTDCD0
+"ZDesigner 140XiIII" = BA140XI3,LPTENUM\Zebra_TechnologiesZT75F8
+"ZDesigner 140XiIII Plus" = BA14XI3P,LPTENUM\Zebra_TechnologiesZT77DB,USBPRINT\Zebra_TechnologiesZT77DB
+"ZDesigner 170PAX3 203DPI" = BA170P31,LPTENUM\Zebra_TechnologiesZT9909,LPTENUM\Zebra_TechnologiesZT9189
+"ZDesigner 170PAX3 300DPI" = BA170P32,LPTENUM\Zebra_TechnologiesZT4808,LPTENUM\Zebra_TechnologiesZT4288
+"ZDesigner 170PAX4 203DPI" = BA170P41,LPTENUM\Zebra_TechnologiesZTFDB3,LPTENUM\Zebra_TechnologiesZT9D11
+"ZDesigner 170PAX4 300DPI" = BA170P42,LPTENUM\Zebra_TechnologiesZT2D92,LPTENUM\Zebra_TechnologiesZT4D30
+"ZDesigner 170Xi4 203 dpi" = BA170XI42,LPTENUM\Zebra_TechnologiesZT2D90,USBPRINT\Zebra_TechnologiesZT2D90
+"ZDesigner 170Xi4 300 dpi" = BA170XI43,LPTENUM\Zebra_TechnologiesZTFD81,USBPRINT\Zebra_TechnologiesZTFD81
+"ZDesigner 170XiIII" = BA170XI3,LPTENUM\Zebra_TechnologiesZT675B
+"ZDesigner 170XiIII Plus" = BA17XI3P,LPTENUM\Zebra_TechnologiesZTE22A,USBPRINT\Zebra_TechnologiesZTE22A
+"ZDesigner 170XiIII Plus 200DPI" = B17XI3P2,LPTENUM\Zebra_TechnologiesZT332B,USBPRINT\Zebra_TechnologiesZT332B
+"ZDesigner 220Xi4 203 dpi" = BA220XI42,LPTENUM\Zebra_TechnologiesZT81FB,USBPRINT\Zebra_TechnologiesZT81FB
+"ZDesigner 220Xi4 300 dpi" = BA220XI43,LPTENUM\Zebra_TechnologiesZT934B,USBPRINT\Zebra_TechnologiesZT934B
+"ZDesigner 220XiIII" = BA220XI3,LPTENUM\Zebra_TechnologiesZT78BD
+"ZDesigner 220XiIII Plus" = BA22XI3P,LPTENUM\Zebra_TechnologiesZT227C,USBPRINT\Zebra_TechnologiesZT227C
+"ZDesigner 220XiIII Plus 300DPI" = B22XI3P3,LPTENUM\Zebra_TechnologiesZTF37D,USBPRINT\Zebra_TechnologiesZTF37D
+"ZDesigner 2746e" = BAB2746E,USBPRINT\Zebra_2746e_4719
+"ZDesigner 888-DT" = BAB888D,LPTENUM\Zebra_888-DT_024E,USBPRINT\Zebra_888-DT_024E
+"ZDesigner 888-TT" = BAB888T,LPTENUM\Zebra_888-TT_C74F,USBPRINT\Zebra_888-TT_C74F
+"ZDesigner 90XiIII" = BA90XI3,LPTENUM\Zebra_TechnologiesZT9FAC
+"ZDesigner 90XiIII Plus" = BA90XI3P,LPTENUM\Zebra_TechnologiesZTDF98,USBPRINT\Zebra_TechnologiesZTDF98
+"ZDesigner 96XiIII" = BA96XI3,LPTENUM\Zebra_TechnologiesZTCAAC
+"ZDesigner 96XiIII Plus" = BA96XI3P,LPTENUM\Zebra_TechnologiesZT5173,USBPRINT\Zebra_TechnologiesZT5173
+"ZDesigner DA402" = BADA402,LPTENUM\Zebra_TechnologiesZTEEF9
+"ZDesigner EZ 320" = BAEZ320,USBPRINT\Zebra_TechnologiesEZD0FA
+"ZDesigner GK420d" = BAGK420D,LPTENUM\Zebra_TechnologiesZT9BEC,USBPRINT\Zebra_TechnologiesZT9BEC
+"ZDesigner GK420d (EPL)" = BGK420DE,LPTENUM\Zebra_TechnologiesZT15F4,USBPRINT\Zebra_TechnologiesZT15F4
+"ZDesigner GK420t" = BAGK420T,LPTENUM\Zebra_TechnologiesZT57ED,USBPRINT\Zebra_TechnologiesZT57ED
+"ZDesigner GK420t (EPL)" = BGK420TE,LPTENUM\Zebra_TechnologiesZTD4E5,USBPRINT\Zebra_TechnologiesZTD4E5
+"ZDesigner GK888d" = BAGK888D,LPTENUM\Zebra_TechnologiesZT09C8,USBPRINT\Zebra_TechnologiesZT09C8
+"ZDesigner GK888d (EPL)" = BEGK888D,LPTENUM\Zebra_TechnologiesZT2C4B,USBPRINT\Zebra_TechnologiesZT2C4B
+"ZDesigner GK888t" = BAGK888T,LPTENUM\Zebra_TechnologiesZTC5C9,USBPRINT\Zebra_TechnologiesZTC5C9
+"ZDesigner GK888t (EPL)" = BEGK888T,LPTENUM\Zebra_TechnologiesZTED5A,USBPRINT\Zebra_TechnologiesZTED5A
+"ZDesigner GT800 (EPL)" = BEGT800,LPTENUM\Zebra_TechnologiesZT6E74,USBPRINT\Zebra_TechnologiesZT6E74
+"ZDesigner GT800 (ZPL)" = BAGT800,LPTENUM\Zebra_TechnologiesZTDA72,USBPRINT\Zebra_TechnologiesZTDA72
+"ZDesigner GX420d" = BAGX420D,LPTENUM\Zebra_TechnologiesZT5869,USBPRINT\Zebra_TechnologiesZT5869
+"ZDesigner GX420d (EPL)" = BGX420DE,LPTENUM\Zebra_TechnologiesZT91AF,USBPRINT\Zebra_TechnologiesZT91AF
+"ZDesigner GX420t" = BAGX420T,LPTENUM\Zebra_TechnologiesZT9468,USBPRINT\Zebra_TechnologiesZT9468
+"ZDesigner GX420t (EPL)" = BGX420TE,LPTENUM\Zebra_TechnologiesZT50BE,USBPRINT\Zebra_TechnologiesZT50BE
+"ZDesigner GX420s" = BAGX420S,LPTENUM\Zebra_Technologies_ZF5E6,USBPRINT\Zebra_Technologies_ZF5E6
+"ZDesigner GX420s (EPL)" = BGX420SE,LPTENUM\Zebra_Technologies_Z21E1,USBPRINT\Zebra_Technologies_Z21E1
+"ZDesigner GX430t" = BAGX430T,LPTENUM\Zebra_TechnologiesZT5439,USBPRINT\Zebra_TechnologiesZT5439
+"ZDesigner GX430t (EPL)" = BGX430TE,LPTENUM\Zebra_TechnologiesZTC0B3,USBPRINT\Zebra_TechnologiesZTC0B3
+"ZDesigner HC100 300 dpi" = BAHC1003,USBPRINT\Zebra_TechnologiesZT4B4D
+"ZDesigner KR403" = BAKKR403,USBPRINT\Zebra_TechnologiesZT51E8
+"ZDesigner LP 2824" = BAB2824,LPTENUM\Zebra_LP2824_5A26,USBPRINT\Zebra_LP2824_5A26
+"ZDesigner LP 2824 Plus (EPL)" = BAB2824P,LPTENUM\Zebra_TechnologiesZTFD6B,USBPRINT\Zebra_TechnologiesZTFD6B
+"ZDesigner LP 2824 Plus (ZPL)" = BAT2824ZP,LPTENUM\Zebra_TechnologiesZT77A3,USBPRINT\Zebra_TechnologiesZT77A3
+"ZDesigner LP 2824-Z" = BAT2824Z,LPTENUM\Zebra_TechnologiesZT17CB,USBPRINT\Zebra_TechnologiesZT17CB
+"ZDesigner LP 2844" = BAB2844,LPTENUM\Zebra_LP2844_5BC4,USBPRINT\Zebra_LP2844_5BC4
+"ZDesigner LP 2844-Z" = BAB2844Z,LPTENUM\Zebra_TechnologiesZT9FD5,USBPRINT\Zebra_TechnologiesZT9FD5
+"ZDesigner Mobile Printer" = BAQLMOB,,USBPRINT\1284_CID_Zebra_TechnologiesZTD914,USBPRINT\1284_CID_Zebra_TechnologiesZTC8B4
+"ZDesigner MZ 220" = BAMZ220,USBPRINT\Zebra_MZ_220_4B8E
+"ZDesigner MZ 320" = BAMZ320,USBPRINT\Zebra_MZ_320_B78F
+"ZDesigner P4T (CPCL)" = BAP4T,USBPRINT\Zebra_TechnologiesZTED52
+"ZDesigner P4T (ZPL)" = BRP4T,USBPRINT\Zebra_Technologies_P06CA
+"ZDesigner QL 220/QL 220 Plus" = BAQL220P,USBPRINT\Zebra_QL_220_7C51,USBPRINT\Zebra_QL_220+_14BB
+"ZDesigner QL 320/QL 320 Plus" = BAQL320P,USBPRINT\Zebra_QL_320_8250,USBPRINT\Zebra_QL_320+_D484
+"ZDesigner QL 420/QL 420 Plus" = BAQL420P,USBPRINT\Zebra_QL_420_F451,USBPRINT\Zebra_QL_420+_1433
+"ZDesigner QLn220" = BAQLN220,USBPRINT\Zebra_TechnologiesQL07A3
+"ZDesigner QLn320" = BAQLN320,USBPRINT\Zebra_TechnologiesQLC7F2
+"ZDesigner R-402" = BAR402,LPTENUM\Zebra_TechnologiesZT26D1
+"ZDesigner R110PAX4 LH-203DPI" = BRPAX42L,LPTENUM\Zebra_TechnologiesZTD914,USBPRINT\Zebra_TechnologiesZTD914
+"ZDesigner R110PAX4 LH-300DPI" = BRPAX43L,LPTENUM\Zebra_TechnologiesZTC8B4,USBPRINT\Zebra_TechnologiesZTC8B4
+"ZDesigner R110PAX4 RH-203DPI" = BRPAX42R,LPTENUM\Zebra_TechnologiesZT1994,USBPRINT\Zebra_TechnologiesZT1994
+"ZDesigner R110PAX4 RH-300DPI" = BRPAX43R,LPTENUM\Zebra_TechnologiesZT0834,USBPRINT\Zebra_TechnologiesZT0834
+"ZDesigner R110Xi 200DPI" = BAR11XM2,LPTENUM\Zebra_TechnologiesZT0FEF,USBPRINT\Zebra_TechnologiesZT0FEF
+"ZDesigner R110Xi 300DPI" = BAR11XM3,LPTENUM\Zebra_TechnologiesZTDEEE,USBPRINT\Zebra_TechnologiesZTDEEE
+"ZDesigner R110Xi HF 200DPI" = BRR11X2H,LPTENUM\Zebra_TechnologiesZTC64F,USBPRINT\Zebra_TechnologiesZTC64F
+"ZDesigner R110Xi HF 300DPI" = BRR11X3H,LPTENUM\Zebra_TechnologiesZT174E,USBPRINT\Zebra_TechnologiesZT174E
+"ZDesigner R110Xi4 203 dpi" = BAR110XI42,LPTENUM\Zebra_TechnologiesZTC396,USBPRINT\Zebra_TechnologiesZTC396
+"ZDesigner R110Xi4 300 dpi" = BAR110XI43,LPTENUM\Zebra_TechnologiesZT1387,USBPRINT\Zebra_TechnologiesZT1387
+"ZDesigner R110Xi4 600 dpi" = BAR110XI46,LPTENUM\Zebra_TechnologiesZT0397,USBPRINT\Zebra_TechnologiesZT0397
+"ZDesigner R110XiIII Plus" = BAR110XI,LPTENUM\Zebra_TechnologiesZT6073,USBPRINT\Zebra_TechnologiesZT6073
+"ZDesigner R170Xi 200DPI" = BAR17XM2,LPTENUM\Zebra_TechnologiesZT85F1,USBPRINT\Zebra_TechnologiesZT85F1
+"ZDesigner R170Xi 300DPI" = BAR17XM3,LPTENUM\Zebra_TechnologiesZT56F0,USBPRINT\Zebra_TechnologiesZT56F0
+"ZDesigner R2844-Z" = BABR284Z,LPTENUM\Zebra_TechnologiesZT4211,USBPRINT\Zebra_TechnologiesZT4211
+"ZDesigner R4Mplus" = BABR4MP,LPTENUM\Zebra_TechnologiesZT8180,USBPRINT\Zebra_TechnologiesZT8180
+"ZDesigner RP4T (ZPL)" = BRRP4T,USBPRINT\Zebra_Technologies_R61C4
+"ZDesigner RW 220" = BARW220,USBPRINT\Zebra_RW_220_9761
+"ZDesigner RW 420" = BARW420,USBPRINT\Zebra_RW_420_1F61
+"ZDesigner RW4-PS" = BARW4PS,USBPRINT\Zebra_Technologies_R50B6
+"ZDesigner RZ400 200 dpi" = BRZ42,LPTENUM\Zebra_TechnologiesZT2AEA,USBPRINT\Zebra_TechnologiesZT2AEA
+"ZDesigner RZ400 300 dpi" = BRZ43,LPTENUM\Zebra_TechnologiesZTEFBB,USBPRINT\Zebra_TechnologiesZTEFBB
+"ZDesigner RZ600 200 dpi" = BRZ62,LPTENUM\Zebra_TechnologiesZTE8E9,USBPRINT\Zebra_TechnologiesZTE8E9
+"ZDesigner RZ600 300 dpi" = BRZ63,LPTENUM\Zebra_TechnologiesZT2DB8,USBPRINT\Zebra_TechnologiesZT2DB8
+"ZDesigner S400" = BAS400,LPTENUM\ZEBRA_TECHNOLOGIESZTDAD5,LPTENUM\Zebra_TechnologiesZTAF0B
+"ZDesigner S4M-203dpi EPL" = BAS4ME2,LPTENUM\ZEBRA_TECHNOLOGIESZT32B3,USBPRINT\Zebra_TechnologiesZT32B3
+"ZDesigner S4M-203dpi ZPL" = BAS4MZ2,LPTENUM\ZEBRA_TECHNOLOGIESZTF482,USBPRINT\Zebra_TechnologiesZTF482
+"ZDesigner S4M-300dpi ZPL" = BAS4MZ3,LPTENUM\ZEBRA_TECHNOLOGIESZT3189,USBPRINT\Zebra_TechnologiesZT3189
+"ZDesigner S600" = BAS600,LPTENUM\ZEBRA_TECHNOLOGIESZT1074,LPTENUM\Zebra_TechnologiesZT1700
+"ZDesigner T402" = BAT402,LPTENUM\Zebra_TechnologiesZTAECF
+"ZDesigner TLP 2824" = BABT2824,LPTENUM\Zebra_TLP2824_F37B,USBPRINT\Zebra_TLP2824_F37B
+"ZDesigner TLP 2824 Plus (EPL)" = BABT2824P,LPTENUM\Zebra_TechnologiesZT2DE0,USBPRINT\Zebra_TechnologiesZT2DE0
+"ZDesigner TLP 2824 Plus (ZPL)" = BA2824ZP,LPTENUM\Zebra_TechnologiesZT0288,USBPRINT\Zebra_TechnologiesZT0288
+"ZDesigner TLP 2824-Z" = BA2824Z,LPTENUM\Zebra_TechnologiesZT561C,USBPRINT\Zebra_TechnologiesZT561C
+"ZDesigner TLP 2844" = BABT2844,LPTENUM\Zebra_TLP2844_F29B,USBPRINT\Zebra_TLP2844_F29B
+"ZDesigner TLP 2844-Z" = BABT284Z,LPTENUM\Zebra_TechnologiesZT0783,USBPRINT\Zebra_TechnologiesZT0783
+"ZDesigner TLP 3842" = BABT3842,USBPRINT\Zebra_TLP3842_92A5
+"ZDesigner TLP 3844-Z" = BABT3844,LPTENUM\Zebra_TechnologiesZT5780,USBPRINT\Zebra_TechnologiesZT5780
+"ZDesigner Z4M 203DPI" = BAZ4M1,LPTENUM\ZEBRA_TECHNOLOGIESZT1E2B,LPTENUM\Zebra_TechnologiesZTB241
+"ZDesigner Z4M 300DPI" = BAZ4M2,LPTENUM\ZEBRA_TECHNOLOGIESZT0EAB,LPTENUM\Zebra_TechnologiesZT6340
+"ZDesigner Z4Mplus 203DPI" = BAZ4M1P,LPTENUM\Zebra_TechnologiesZT6789,USBPRINT\Zebra_TechnologiesZT6789
+"ZDesigner Z4Mplus 300DPI" = BAZ4M2P,LPTENUM\Zebra_TechnologiesZTA799,USBPRINT\Zebra_TechnologiesZTA799
+"ZDesigner Z6M 203DPI" = BAZ6M1,LPTENUM\ZEBRA_TECHNOLOGIESZT67A1,LPTENUM\Zebra_TechnologiesZTD25A
+"ZDesigner Z6M 300DPI" = BAZ6M2,LPTENUM\ZEBRA_TECHNOLOGIESZTB6A0,LPTENUM\Zebra_TechnologiesZT035B
+"ZDesigner Z6Mplus 203DPI" = BAZ6M1P,LPTENUM\Zebra_TechnologiesZT2792,USBPRINT\Zebra_TechnologiesZT2792
+"ZDesigner Z6Mplus 300DPI" = BAZ6M2P,LPTENUM\Zebra_TechnologiesZT5F81,USBPRINT\Zebra_TechnologiesZT5F81
+"ZDesigner ZM400 200 dpi (EPL)" = BZM4E2,LPTENUM\Zebra_TechnologiesZT89E9,USBPRINT\Zebra_TechnologiesZT89E9
+"ZDesigner ZM400 200 dpi (ZPL)" = BZM4Z2,LPTENUM\Zebra_TechnologiesZT4FD8,USBPRINT\Zebra_TechnologiesZT4FD8
+"ZDesigner ZM400 300 dpi (ZPL)" = BZM4Z3,LPTENUM\Zebra_TechnologiesZT8AD3,USBPRINT\Zebra_TechnologiesZT8AD3
+"ZDesigner ZM400 600 dpi (ZPL)" = BZM4Z6,LPTENUM\Zebra_TechnologiesZT9A99,USBPRINT\Zebra_TechnologiesZT9A99
+"ZDesigner ZM600 200 dpi (EPL)" = BZM6E2,LPTENUM\Zebra_TechnologiesZTEBD0,USBPRINT\Zebra_TechnologiesZTEBD0
+"ZDesigner ZM600 200 dpi (ZPL)" = BZM6Z2,LPTENUM\Zebra_TechnologiesZT2DE1,USBPRINT\Zebra_TechnologiesZT2DE1
+"ZDesigner ZM600 300 dpi (ZPL)" = BZM6Z3,LPTENUM\Zebra_TechnologiesZTE8B0,USBPRINT\Zebra_TechnologiesZTE8B0
+
+[BA105SL1.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BA105SL1.dat,THERMAL_NT,LANGMON_NT,@BA105SL1.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BA105SL1.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BA105SL2.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BA105SL2.dat,THERMAL_NT,LANGMON_NT,@BA105SL2.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BA105SL2.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BA110P31.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BA110P31.dat,THERMAL_NT,LANGMON_NT,@BA110P31.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BA110P31.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BA110P32.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BA110P32.dat,THERMAL_NT,LANGMON_NT,@BA110P32.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BA110P32.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BA110P33.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BA110P33.dat,THERMAL_NT,LANGMON_NT,@BA110P33.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BA110P33.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BA110P41.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BA110P41.dat,THERMAL_NT,LANGMON_NT,@BA110P41.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BA110P41.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BA110P42.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BA110P42.dat,THERMAL_NT,LANGMON_NT,@BA110P42.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BA110P42.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BA110XI42.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BA110XI42.dat,THERMAL_NT,LANGMON_NT,@BA110XI42.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BA110XI42.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BA110XI43.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BA110XI43.dat,THERMAL_NT,LANGMON_NT,@BA110XI43.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BA110XI43.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BA110XI46.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BA110XI46.dat,THERMAL_NT,LANGMON_NT,@BA110XI46.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BA110XI46.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BA110XI2.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BA110XI2.dat,THERMAL_NT,LANGMON_NT,@BA110XI2.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BA110XI2.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BA110XI3.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BA110XI3.dat,THERMAL_NT,LANGMON_NT,@BA110XI3.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BA110XI3.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BA110XI6.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BA110XI6.dat,THERMAL_NT,LANGMON_NT,@BA110XI6.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BA110XI6.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BA140XI42.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BA140XI42.dat,THERMAL_NT,LANGMON_NT,@BA140XI42.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BA140XI42.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BA140XI3.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BA140XI3.dat,THERMAL_NT,LANGMON_NT,@BA140XI3.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BA140XI3.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BA14XI3P.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BA14XI3P.dat,THERMAL_NT,LANGMON_NT,@BA14XI3P.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BA14XI3P.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BA170P31.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BA170P31.dat,THERMAL_NT,LANGMON_NT,@BA170P31.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BA170P31.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BA170P32.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BA170P32.dat,THERMAL_NT,LANGMON_NT,@BA170P32.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BA170P32.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BA170P41.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BA170P41.dat,THERMAL_NT,LANGMON_NT,@BA170P41.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BA170P41.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BA170P42.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BA170P42.dat,THERMAL_NT,LANGMON_NT,@BA170P42.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BA170P42.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BA170XI42.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BA170XI42.dat,THERMAL_NT,LANGMON_NT,@BA170XI42.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BA170XI42.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BA170XI43.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BA170XI43.dat,THERMAL_NT,LANGMON_NT,@BA170XI43.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BA170XI43.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BA170XI3.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BA170XI3.dat,THERMAL_NT,LANGMON_NT,@BA170XI3.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BA170XI3.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BA17XI3P.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BA17XI3P.dat,THERMAL_NT,LANGMON_NT,@BA17XI3P.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BA17XI3P.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[B17XI3P2.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@B17XI3P2.dat,THERMAL_NT,LANGMON_NT,@B17XI3P2.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=B17XI3P2.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BA220XI42.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BA220XI42.dat,THERMAL_NT,LANGMON_NT,@BA220XI42.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BA220XI42.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BA220XI43.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BA220XI43.dat,THERMAL_NT,LANGMON_NT,@BA220XI43.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BA220XI43.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BA220XI3.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BA220XI3.dat,THERMAL_NT,LANGMON_NT,@BA220XI3.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BA220XI3.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BA22XI3P.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BA22XI3P.dat,THERMAL_NT,LANGMON_NT,@BA22XI3P.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BA22XI3P.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[B22XI3P3.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@B22XI3P3.dat,THERMAL_NT,LANGMON_NT,@B22XI3P3.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=B22XI3P3.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BAB2746E.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BAB2746E.dat,THERMAL_NT,LANGMON_NT,@BAB2746E.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BAB2746E.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BAB888D.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BAB888D.dat,THERMAL_NT,LANGMON_NT,@BAB888D.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BAB888D.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BAB888T.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BAB888T.dat,THERMAL_NT,LANGMON_NT,@BAB888T.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BAB888T.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BA90XI3.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BA90XI3.dat,THERMAL_NT,LANGMON_NT,@BA90XI3.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BA90XI3.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BA90XI3P.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BA90XI3P.dat,THERMAL_NT,LANGMON_NT,@BA90XI3P.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BA90XI3P.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BA96XI3.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BA96XI3.dat,THERMAL_NT,LANGMON_NT,@BA96XI3.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BA96XI3.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BA96XI3P.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BA96XI3P.dat,THERMAL_NT,LANGMON_NT,@BA96XI3P.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BA96XI3P.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BADA402.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BADA402.dat,THERMAL_NT,LANGMON_NT,@BADA402.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BADA402.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BAEZ320.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BAEZ320.dat,THERMAL_NT,LANGMON_NT,@BAEZ320.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BAEZ320.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BAGK420D.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BAGK420D.dat,THERMAL_NT,LANGMON_NT,@BAGK420D.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BAGK420D.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BGK420DE.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BGK420DE.dat,THERMAL_NT,LANGMON_NT,@BGK420DE.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BGK420DE.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BAGK420T.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BAGK420T.dat,THERMAL_NT,LANGMON_NT,@BAGK420T.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BAGK420T.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BGK420TE.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BGK420TE.dat,THERMAL_NT,LANGMON_NT,@BGK420TE.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BGK420TE.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BAGK888D.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BAGK888D.dat,THERMAL_NT,LANGMON_NT,@BAGK888D.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BAGK888D.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BEGK888D.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BEGK888D.dat,THERMAL_NT,LANGMON_NT,@BEGK888D.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BEGK888D.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BAGK888T.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BAGK888T.dat,THERMAL_NT,LANGMON_NT,@BAGK888T.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BAGK888T.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BEGK888T.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BEGK888T.dat,THERMAL_NT,LANGMON_NT,@BEGK888T.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BEGK888T.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BEGT800.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BEGT800.dat,THERMAL_NT,LANGMON_NT,@BEGT800.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BEGT800.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BAGT800.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BAGT800.dat,THERMAL_NT,LANGMON_NT,@BAGT800.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BAGT800.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BAGX420D.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BAGX420D.dat,THERMAL_NT,LANGMON_NT,@BAGX420D.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BAGX420D.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BGX420DE.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BGX420DE.dat,THERMAL_NT,LANGMON_NT,@BGX420DE.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BGX420DE.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BAGX420T.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BAGX420T.dat,THERMAL_NT,LANGMON_NT,@BAGX420T.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BAGX420T.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BAGX420S.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BAGX420S.dat,THERMAL_NT,LANGMON_NT,@BAGX420S.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BAGX420S.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BGX420TE.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BGX420TE.dat,THERMAL_NT,LANGMON_NT,@BGX420TE.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BGX420TE.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BGX420SE.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BGX420SE.dat,THERMAL_NT,LANGMON_NT,@BGX420SE.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BGX420SE.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BAGX430T.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BAGX430T.dat,THERMAL_NT,LANGMON_NT,@BAGX430T.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BAGX430T.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BGX430TE.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BGX430TE.dat,THERMAL_NT,LANGMON_NT,@BGX430TE.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BGX430TE.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BAHC1003.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BAHC1003.dat,THERMAL_NT,LANGMON_NT,@BAHC1003.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BAHC1003.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BAKKR403.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BAKKR403.dat,THERMAL_NT,LANGMON_NT,@BAKKR403.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BAKKR403.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BAB2824.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BAB2824.dat,THERMAL_NT,LANGMON_NT,@BAB2824.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BAB2824.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BAB2824P.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BAB2824P.dat,THERMAL_NT,LANGMON_NT,@BAB2824P.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BAB2824P.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BAT2824ZP.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BAT2824ZP.dat,THERMAL_NT,LANGMON_NT,@BAT2824ZP.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BAT2824ZP.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BAT2824Z.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BAT2824Z.dat,THERMAL_NT,LANGMON_NT,@BAT2824Z.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BAT2824Z.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BAB2844.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BAB2844.dat,THERMAL_NT,LANGMON_NT,@BAB2844.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BAB2844.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BAB2844Z.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BAB2844Z.dat,THERMAL_NT,LANGMON_NT,@BAB2844Z.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BAB2844Z.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BAQLMOB.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BAQLMOB.dat,THERMAL_NT,LANGMON_NT,@BAQLMOB.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BAQLMOB.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BAMZ220.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BAMZ220.dat,THERMAL_NT,LANGMON_NT,@BAMZ220.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BAMZ220.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BAMZ320.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BAMZ320.dat,THERMAL_NT,LANGMON_NT,@BAMZ320.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BAMZ320.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BAP4T.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BAP4T.dat,THERMAL_NT,LANGMON_NT,@BAP4T.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BAP4T.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BRP4T.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BRP4T.dat,THERMAL_NT,LANGMON_NT,@BRP4T.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BRP4T.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BAQL220P.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BAQL220P.dat,THERMAL_NT,LANGMON_NT,@BAQL220P.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BAQL220P.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BAQL320P.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BAQL320P.dat,THERMAL_NT,LANGMON_NT,@BAQL320P.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BAQL320P.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BAQL420P.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BAQL420P.dat,THERMAL_NT,LANGMON_NT,@BAQL420P.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BAQL420P.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BAQLN220.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BAQLN220.dat,THERMAL_NT,LANGMON_NT,@BAQLN220.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BAQLN220.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BAQLN320.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BAQLN320.dat,THERMAL_NT,LANGMON_NT,@BAQLN320.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BAQLN320.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BAR402.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BAR402.dat,THERMAL_NT,LANGMON_NT,@BAR402.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BAR402.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BRPAX42L.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BRPAX42L.dat,THERMAL_NT,LANGMON_NT,@BRPAX42L.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BRPAX42L.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BRPAX43L.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BRPAX43L.dat,THERMAL_NT,LANGMON_NT,@BRPAX43L.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BRPAX43L.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BRPAX42R.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BRPAX42R.dat,THERMAL_NT,LANGMON_NT,@BRPAX42R.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BRPAX42R.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BRPAX43R.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BRPAX43R.dat,THERMAL_NT,LANGMON_NT,@BRPAX43R.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BRPAX43R.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BAR11XM2.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BAR11XM2.dat,THERMAL_NT,LANGMON_NT,@BAR11XM2.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BAR11XM2.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BAR11XM3.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BAR11XM3.dat,THERMAL_NT,LANGMON_NT,@BAR11XM3.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BAR11XM3.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BRR11X2H.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BRR11X2H.dat,THERMAL_NT,LANGMON_NT,@BRR11X2H.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BRR11X2H.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BRR11X3H.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BRR11X3H.dat,THERMAL_NT,LANGMON_NT,@BRR11X3H.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BRR11X3H.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BAR110XI42.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BAR110XI42.dat,THERMAL_NT,LANGMON_NT,@BAR110XI42.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BAR110XI42.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BAR110XI43.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BAR110XI43.dat,THERMAL_NT,LANGMON_NT,@BAR110XI43.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BAR110XI43.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BAR110XI46.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BAR110XI46.dat,THERMAL_NT,LANGMON_NT,@BAR110XI46.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BAR110XI46.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BAR110XI.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BAR110XI.dat,THERMAL_NT,LANGMON_NT,@BAR110XI.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BAR110XI.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BAR17XM2.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BAR17XM2.dat,THERMAL_NT,LANGMON_NT,@BAR17XM2.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BAR17XM2.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BAR17XM3.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BAR17XM3.dat,THERMAL_NT,LANGMON_NT,@BAR17XM3.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BAR17XM3.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BABR284Z.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BABR284Z.dat,THERMAL_NT,LANGMON_NT,@BABR284Z.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BABR284Z.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BABR4MP.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BABR4MP.dat,THERMAL_NT,LANGMON_NT,@BABR4MP.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BABR4MP.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BRRP4T.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BRRP4T.dat,THERMAL_NT,LANGMON_NT,@BRRP4T.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BRRP4T.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BARW220.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BARW220.dat,THERMAL_NT,LANGMON_NT,@BARW220.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BARW220.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BARW420.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BARW420.dat,THERMAL_NT,LANGMON_NT,@BARW420.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BARW420.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BARW4PS.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BARW4PS.dat,THERMAL_NT,LANGMON_NT,@BARW4PS.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BARW4PS.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BRZ42.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BRZ42.dat,THERMAL_NT,LANGMON_NT,@BRZ42.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BRZ42.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BRZ43.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BRZ43.dat,THERMAL_NT,LANGMON_NT,@BRZ43.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BRZ43.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BRZ62.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BRZ62.dat,THERMAL_NT,LANGMON_NT,@BRZ62.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BRZ62.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BRZ63.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BRZ63.dat,THERMAL_NT,LANGMON_NT,@BRZ63.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BRZ63.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BAS400.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BAS400.dat,THERMAL_NT,LANGMON_NT,@BAS400.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BAS400.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BAS4ME2.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BAS4ME2.dat,THERMAL_NT,LANGMON_NT,@BAS4ME2.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BAS4ME2.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BAS4MZ2.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BAS4MZ2.dat,THERMAL_NT,LANGMON_NT,@BAS4MZ2.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BAS4MZ2.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BAS4MZ3.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BAS4MZ3.dat,THERMAL_NT,LANGMON_NT,@BAS4MZ3.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BAS4MZ3.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BAS600.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BAS600.dat,THERMAL_NT,LANGMON_NT,@BAS600.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BAS600.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BAT402.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BAT402.dat,THERMAL_NT,LANGMON_NT,@BAT402.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BAT402.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BABT2824.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BABT2824.dat,THERMAL_NT,LANGMON_NT,@BABT2824.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BABT2824.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BABT2824P.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BABT2824P.dat,THERMAL_NT,LANGMON_NT,@BABT2824P.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BABT2824P.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BA2824ZP.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BA2824ZP.dat,THERMAL_NT,LANGMON_NT,@BA2824ZP.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BA2824ZP.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BA2824Z.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BA2824Z.dat,THERMAL_NT,LANGMON_NT,@BA2824Z.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BA2824Z.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BABT2844.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BABT2844.dat,THERMAL_NT,LANGMON_NT,@BABT2844.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BABT2844.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BABT284Z.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BABT284Z.dat,THERMAL_NT,LANGMON_NT,@BABT284Z.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BABT284Z.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BABT3842.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BABT3842.dat,THERMAL_NT,LANGMON_NT,@BABT3842.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BABT3842.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BABT3844.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BABT3844.dat,THERMAL_NT,LANGMON_NT,@BABT3844.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BABT3844.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BAZ4M1.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BAZ4M1.dat,THERMAL_NT,LANGMON_NT,@BAZ4M1.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BAZ4M1.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BAZ4M2.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BAZ4M2.dat,THERMAL_NT,LANGMON_NT,@BAZ4M2.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BAZ4M2.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BAZ4M1P.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BAZ4M1P.dat,THERMAL_NT,LANGMON_NT,@BAZ4M1P.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BAZ4M1P.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BAZ4M2P.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BAZ4M2P.dat,THERMAL_NT,LANGMON_NT,@BAZ4M2P.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BAZ4M2P.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BAZ6M1.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BAZ6M1.dat,THERMAL_NT,LANGMON_NT,@BAZ6M1.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BAZ6M1.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BAZ6M2.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BAZ6M2.dat,THERMAL_NT,LANGMON_NT,@BAZ6M2.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BAZ6M2.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BAZ6M1P.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BAZ6M1P.dat,THERMAL_NT,LANGMON_NT,@BAZ6M1P.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BAZ6M1P.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BAZ6M2P.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BAZ6M2P.dat,THERMAL_NT,LANGMON_NT,@BAZ6M2P.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BAZ6M2P.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BZM4E2.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BZM4E2.dat,THERMAL_NT,LANGMON_NT,@BZM4E2.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BZM4E2.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BZM4Z2.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BZM4Z2.dat,THERMAL_NT,LANGMON_NT,@BZM4Z2.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BZM4Z2.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BZM4Z3.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BZM4Z3.dat,THERMAL_NT,LANGMON_NT,@BZM4Z3.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BZM4Z3.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BZM4Z6.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BZM4Z6.dat,THERMAL_NT,LANGMON_NT,@BZM4Z6.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BZM4Z6.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BZM6E2.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BZM6E2.dat,THERMAL_NT,LANGMON_NT,@BZM6E2.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BZM6E2.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BZM6Z2.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BZM6Z2.dat,THERMAL_NT,LANGMON_NT,@BZM6Z2.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BZM6Z2.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[BZM6Z3.nt]
+DriverVer=09/14/2011,4.6.63.12
+CopyFiles=@BZM6Z3.dat,THERMAL_NT,LANGMON_NT,@BZM6Z3.BA0,@ZDesign.CHM,@Angsana.MMF,@Gothic.MMF,@Korean.MMF,@Mincho.MMF,@MKai.MMF,@MSung.MMF,@AndaleJ.MMF,@AndaleK.MMF,@AndaleT.MMF,@AndaleS.MMF,@ZplErr.sme,@EplErr.sme,@ToolsZPL.dll,@ToolsEPL.dll,@ToolsCPCL.dll,@ToolsKIOSK.dll,@ToolsZPLx64.dll,@ToolsEPLx64.dll,@ToolsCPCLx64.dll,@ToolsKIOSKx64.dll,@ZplKskErr.sme,@BAKKR403.PP0,@CpClErr.sme,FNTFILES
+DataFile=BZM6Z3.dat
+DataSection=THERMAL_DATA_NT
+HelpFile=ZDesign.CHM
+[THERMAL_NT]
+ZDNdrv50.dll,,,0x00000004
+ZDNui50.dll,,,0x00000004
+ZDNENG50.DLL
+ZDNSLO50.DLL
+ZDNCRO50.DLL
+ZDNGER50.DLL
+ZDNFRA50.DLL
+ZDNSPA50.DLL
+ZDNITA50.DLL
+ZDNFIN50.DLL
+ZDNDUT50.DLL
+ZDNPOR50.DLL
+ZDNCZE50.DLL
+ZDNPOL50.DLL
+ZDNHUN50.DLL
+ZDNRUS50.DLL
+ZDNTUR50.DLL
+ZDNSWE50.DLL
+ZDNLIT50.DLL
+ZDNCHI50.DLL
+ZDNSCH50.DLL
+ZDNTAI50.DLL
+ZDNKOR50.DLL
+ZDNJAP50.DLL
+ZDNUKR50.DLL
+zdnPMntU.dll
+zdnPMntS.dll
+[LANGMON_NT]
+zdnNLMNT.dll,,,0x00000004
+
+[THERMAL_DATA_NT]
+DriverFile=ZDNdrv50.dll
+ConfigFile=ZDNui50.dll
+NoTestPage=1
+DefaultDataType=RAW
+LanguageMonitor="ZDesigner Language Monitor,zdnNLMNT.dll"
+LanguageMonitorFiles=@zdnNLMNT.dll
+
+[PortMonitors]
+"ZDesigner Port Monitor" = PortMonzdn
+
+[PortMonzdn]
+CopyFiles=PortMonzdn_Files
+PortMonitorDll=zdnPMntS.dll
+
+[PortMonzdn_Files]
+zdnPMntS.dll
+zdnPMntU.dll
+
+[FNTFILES]
+ZebraBarcode.ttf
+
+[DestinationDirs]
+PortMonzdn_Files=66002
+DefaultDestDir=66000
+LANGMON_NT=66002
+FNTFILES=20
+
+[SourceDisksFiles]
+zdnNLMNT.DLL = 1
+zdnPMntS.dll = 1
+zdnPMntU.dll = 1
+BA105SL1.dat = 1
+BA105SL1.BA0 = 1
+BA105SL2.dat = 1
+BA105SL2.BA0 = 1
+BA110P31.dat = 1
+BA110P31.BA0 = 1
+BA110P32.dat = 1
+BA110P32.BA0 = 1
+BA110P33.dat = 1
+BA110P33.BA0 = 1
+BA110P41.dat = 1
+BA110P41.BA0 = 1
+BA110P42.dat = 1
+BA110P42.BA0 = 1
+BA110XI42.dat = 1
+BA110XI42.BA0 = 1
+BA110XI43.dat = 1
+BA110XI43.BA0 = 1
+BA110XI46.dat = 1
+BA110XI46.BA0 = 1
+BA110XI2.dat = 1
+BA110XI2.BA0 = 1
+BA110XI3.dat = 1
+BA110XI3.BA0 = 1
+BA110XI6.dat = 1
+BA110XI6.BA0 = 1
+BA140XI42.dat = 1
+BA140XI42.BA0 = 1
+BA140XI3.dat = 1
+BA140XI3.BA0 = 1
+BA14XI3P.dat = 1
+BA14XI3P.BA0 = 1
+BA170P31.dat = 1
+BA170P31.BA0 = 1
+BA170P32.dat = 1
+BA170P32.BA0 = 1
+BA170P41.dat = 1
+BA170P41.BA0 = 1
+BA170P42.dat = 1
+BA170P42.BA0 = 1
+BA170XI42.dat = 1
+BA170XI42.BA0 = 1
+BA170XI43.dat = 1
+BA170XI43.BA0 = 1
+BA170XI3.dat = 1
+BA170XI3.BA0 = 1
+BA17XI3P.dat = 1
+BA17XI3P.BA0 = 1
+B17XI3P2.dat = 1
+B17XI3P2.BA0 = 1
+BA220XI42.dat = 1
+BA220XI42.BA0 = 1
+BA220XI43.dat = 1
+BA220XI43.BA0 = 1
+BA220XI3.dat = 1
+BA220XI3.BA0 = 1
+BA22XI3P.dat = 1
+BA22XI3P.BA0 = 1
+B22XI3P3.dat = 1
+B22XI3P3.BA0 = 1
+BAB2746E.dat = 1
+BAB2746E.BA0 = 1
+BAB888D.dat = 1
+BAB888D.BA0 = 1
+BAB888T.dat = 1
+BAB888T.BA0 = 1
+BA90XI3.dat = 1
+BA90XI3.BA0 = 1
+BA90XI3P.dat = 1
+BA90XI3P.BA0 = 1
+BA96XI3.dat = 1
+BA96XI3.BA0 = 1
+BA96XI3P.dat = 1
+BA96XI3P.BA0 = 1
+BADA402.dat = 1
+BADA402.BA0 = 1
+BAEZ320.dat = 1
+BAEZ320.BA0 = 1
+BAGK420D.dat = 1
+BAGK420D.BA0 = 1
+BGK420DE.dat = 1
+BGK420DE.BA0 = 1
+BAGK420T.dat = 1
+BAGK420T.BA0 = 1
+BGK420TE.dat = 1
+BGK420TE.BA0 = 1
+BAGK888D.dat = 1
+BAGK888D.BA0 = 1
+BEGK888D.dat = 1
+BEGK888D.BA0 = 1
+BAGK888T.dat = 1
+BAGK888T.BA0 = 1
+BEGK888T.dat = 1
+BEGK888T.BA0 = 1
+BEGT800.dat = 1
+BEGT800.BA0 = 1
+BAGT800.dat = 1
+BAGT800.BA0 = 1
+BAGX420D.dat = 1
+BAGX420D.BA0 = 1
+BGX420DE.dat = 1
+BGX420DE.BA0 = 1
+BAGX420T.dat = 1
+BAGX420T.BA0 = 1
+BGX420TE.dat = 1
+BGX420TE.BA0 = 1
+BAGX420S.dat = 1
+BAGX420S.BA0 = 1
+BGX420SE.dat = 1
+BGX420SE.BA0 = 1
+BAGX430T.dat = 1
+BAGX430T.BA0 = 1
+BGX430TE.dat = 1
+BGX430TE.BA0 = 1
+BAHC1003.dat = 1
+BAHC1003.BA0 = 1
+BAKKR403.dat = 1
+BAKKR403.BA0 = 1
+BAB2824.dat = 1
+BAB2824.BA0 = 1
+BAB2824P.dat = 1
+BAB2824P.BA0 = 1
+BAT2824ZP.dat = 1
+BAT2824ZP.BA0 = 1
+BAT2824Z.dat = 1
+BAT2824Z.BA0 = 1
+BAB2844.dat = 1
+BAB2844.BA0 = 1
+BAB2844Z.dat = 1
+BAB2844Z.BA0 = 1
+BAQLMOB.dat = 1
+BAQLMOB.BA0 = 1
+BAMZ220.dat = 1
+BAMZ220.BA0 = 1
+BAMZ320.dat = 1
+BAMZ320.BA0 = 1
+BAP4T.dat = 1
+BAP4T.BA0 = 1
+BRP4T.dat = 1
+BRP4T.BA0 = 1
+BAQL220P.dat = 1
+BAQL220P.BA0 = 1
+BAQL320P.dat = 1
+BAQL320P.BA0 = 1
+BAQL420P.dat = 1
+BAQL420P.BA0 = 1
+BAQLN220.dat = 1
+BAQLN220.BA0 = 1
+BAQLN320.dat = 1
+BAQLN320.BA0 = 1
+BAR402.dat = 1
+BAR402.BA0 = 1
+BRPAX42L.dat = 1
+BRPAX42L.BA0 = 1
+BRPAX43L.dat = 1
+BRPAX43L.BA0 = 1
+BRPAX42R.dat = 1
+BRPAX42R.BA0 = 1
+BRPAX43R.dat = 1
+BRPAX43R.BA0 = 1
+BAR11XM2.dat = 1
+BAR11XM2.BA0 = 1
+BAR11XM3.dat = 1
+BAR11XM3.BA0 = 1
+BRR11X2H.dat = 1
+BRR11X2H.BA0 = 1
+BRR11X3H.dat = 1
+BRR11X3H.BA0 = 1
+BAR110XI42.dat = 1
+BAR110XI42.BA0 = 1
+BAR110XI43.dat = 1
+BAR110XI43.BA0 = 1
+BAR110XI46.dat = 1
+BAR110XI46.BA0 = 1
+BAR110XI.dat = 1
+BAR110XI.BA0 = 1
+BAR17XM2.dat = 1
+BAR17XM2.BA0 = 1
+BAR17XM3.dat = 1
+BAR17XM3.BA0 = 1
+BABR284Z.dat = 1
+BABR284Z.BA0 = 1
+BABR4MP.dat = 1
+BABR4MP.BA0 = 1
+BRRP4T.dat = 1
+BRRP4T.BA0 = 1
+BARW220.dat = 1
+BARW220.BA0 = 1
+BARW420.dat = 1
+BARW420.BA0 = 1
+BARW4PS.dat = 1
+BARW4PS.BA0 = 1
+BRZ42.dat = 1
+BRZ42.BA0 = 1
+BRZ43.dat = 1
+BRZ43.BA0 = 1
+BRZ62.dat = 1
+BRZ62.BA0 = 1
+BRZ63.dat = 1
+BRZ63.BA0 = 1
+BAS400.dat = 1
+BAS400.BA0 = 1
+BAS4ME2.dat = 1
+BAS4ME2.BA0 = 1
+BAS4MZ2.dat = 1
+BAS4MZ2.BA0 = 1
+BAS4MZ3.dat = 1
+BAS4MZ3.BA0 = 1
+BAS600.dat = 1
+BAS600.BA0 = 1
+BAT402.dat = 1
+BAT402.BA0 = 1
+BABT2824.dat = 1
+BABT2824.BA0 = 1
+BABT2824P.dat = 1
+BABT2824P.BA0 = 1
+BA2824ZP.dat = 1
+BA2824ZP.BA0 = 1
+BA2824Z.dat = 1
+BA2824Z.BA0 = 1
+BABT2844.dat = 1
+BABT2844.BA0 = 1
+BABT284Z.dat = 1
+BABT284Z.BA0 = 1
+BABT3842.dat = 1
+BABT3842.BA0 = 1
+BABT3844.dat = 1
+BABT3844.BA0 = 1
+BAZ4M1.dat = 1
+BAZ4M1.BA0 = 1
+BAZ4M2.dat = 1
+BAZ4M2.BA0 = 1
+BAZ4M1P.dat = 1
+BAZ4M1P.BA0 = 1
+BAZ4M2P.dat = 1
+BAZ4M2P.BA0 = 1
+BAZ6M1.dat = 1
+BAZ6M1.BA0 = 1
+BAZ6M2.dat = 1
+BAZ6M2.BA0 = 1
+BAZ6M1P.dat = 1
+BAZ6M1P.BA0 = 1
+BAZ6M2P.dat = 1
+BAZ6M2P.BA0 = 1
+BZM4E2.dat = 1
+BZM4E2.BA0 = 1
+BZM4Z2.dat = 1
+BZM4Z2.BA0 = 1
+BZM4Z3.dat = 1
+BZM4Z3.BA0 = 1
+BZM4Z6.dat = 1
+BZM4Z6.BA0 = 1
+BZM6E2.dat = 1
+BZM6E2.BA0 = 1
+BZM6Z2.dat = 1
+BZM6Z2.BA0 = 1
+BZM6Z3.dat = 1
+BZM6Z3.BA0 = 1
+ZDesign.CHM = 1
+Angsana.MMF = 1
+Gothic.MMF = 1
+Korean.MMF = 1
+Mincho.MMF = 1
+MKai.MMF = 1
+MSung.MMF = 1
+AndaleJ.MMF = 1
+AndaleK.MMF = 1
+AndaleT.MMF = 1
+AndaleS.MMF = 1
+ZplErr.sme = 1
+EplErr.sme = 1
+ToolsZPL.dll = 1
+ToolsEPL.dll = 1
+ToolsCPCL.dll = 1
+ToolsKIOSK.dll = 1
+ToolsZPLx64.dll = 1
+ToolsEPLx64.dll = 1
+ToolsCPCLx64.dll = 1
+ToolsKIOSKx64.dll = 1
+ZplKskErr.sme = 1
+BAKKR403.PP0 = 1
+CpClErr.sme = 1
+ZDNDRV50.DLL = 1
+ZDNUI50.DLL = 1
+ZDNENG50.DLL = 1
+ZDNSLO50.DLL = 1
+ZDNCRO50.DLL = 1
+ZDNGER50.DLL = 1
+ZDNFRA50.DLL = 1
+ZDNSPA50.DLL = 1
+ZDNITA50.DLL = 1
+ZDNFIN50.DLL = 1
+ZDNDUT50.DLL = 1
+ZDNPOR50.DLL = 1
+ZDNCZE50.DLL = 1
+ZDNPOL50.DLL = 1
+ZDNHUN50.DLL = 1
+ZDNRUS50.DLL = 1
+ZDNTUR50.DLL = 1
+ZDNSWE50.DLL = 1
+ZDNLIT50.DLL = 1
+ZDNCHI50.DLL = 1
+ZDNSCH50.DLL = 1
+ZDNTAI50.DLL = 1
+ZDNKOR50.DLL = 1
+ZDNJAP50.DLL = 1
+ZDNUKR50.DLL = 1
+ZebraBarcode.ttf = 1
+
+[SourceDisksNames]
+1 = %Floppy%,,
+
+[SourceDisksNames.x86]
+1 = %Floppy%,,
+
+[Strings]
+Floppy="ZDesigner Printer Driver Disk"
+CLASSNAME="Printer"
+
+
+[AppInstall]
+AppName=Zebra Font Downloader
+AppIcon=*STARTUP*, "Zebra Font Downloader", ..\ZebraFD.exe, 0
+DesktopIcon="Zebra Font Downloader", ..\ZebraFD.exe, 0
+AppFiles=@..\ZebraFD.exe
+AppDest=*PRGFILES*\Zebra Font Downloader
+AppName2=Zebra Status Monitor
+AppFiles2=@..\StatMonSetup.exe
+AppDest2=*PRGFILES*\Zebra Status Monitor
+AppFlag=3
+AppDefaultCheck=1
+
+[PRNINST]
+AllowNewPortInstallationDlg=0
+Languages=1,3,4,5,7,8,9,10,11,12,13,14,15,16,18,19,22,23,24,25,26,27,28

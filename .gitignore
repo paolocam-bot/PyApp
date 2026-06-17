@@ -8,3 +8,5 @@ __pycache__/
 *.log
 *.DS_Store
  HardwareHero\
+ ControlloStampanti\
+ main.build

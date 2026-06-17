@@ -7,30 +7,34 @@ import urllib.request
 from tkinter import messagebox
 import customtkinter as ctk
 
-
 GITHUB_RELEASE_URL = "https://api.github.com/repos/paolocam-bot/PyApp/releases/latest"
 
-# =====================================================================
-# 1. FUNZIONI DI UTILITY E AGGIORNAMENTO (Globali)
-# =====================================================================
-
 def get_app_base_dir():
-    if getattr(sys, "frozen", False):
-        return os.path.dirname(sys.executable)
+    # Rileva la cartella principale sia per Nuitka che in ambiente di sviluppo
+    if getattr(sys, "frozen", False) or "__compiled__" in globals():
+        return os.path.dirname(os.path.realpath(sys.argv[0]))
     current_file = os.path.abspath(__file__)
-    # Risale di due cartelle per trovare la Root del progetto
     return os.path.dirname(os.path.dirname(current_file))
-
 
 def scarica_asset(asset, destination_folder):
     name = asset.get("name")
     url = asset.get("browser_download_url")
     if not name or not url:
-        raise ValueError("Asset GitHub non valido: manca name o browser_download_url")
+        raise ValueError("Asset GitHub non valido")
+
+    # Se è l'archivio corretto, lo salviamo temporaneamente con un altro nome
+    if name == "ControlloStampanti.zip":
+        name = "ControlloStampanti_nuovo.zip"
+    else:
+        return False, None # Ignora altri file che non sono il pacchetto principale
 
     destination = os.path.join(destination_folder, name)
+    
     if os.path.exists(destination):
-        return False, destination
+        try:
+            os.remove(destination)
+        except Exception:
+            pass
 
     request = urllib.request.Request(
         url,
@@ -45,8 +49,7 @@ def scarica_asset(asset, destination_folder):
     with open(destination, "wb") as handle:
         handle.write(data)
 
-    return True, destination
-
+    return True, name
 
 def scarica_asset_mancanti():
     cartella_app = get_app_base_dir()
@@ -61,32 +64,23 @@ def scarica_asset_mancanti():
         with urllib.request.urlopen(request, timeout=20) as response:
             release_data = json.loads(response.read().decode("utf-8"))
     except Exception as e:
-        messagebox.showerror(
-            "Errore aggiornamento",
-            f"Impossibile leggere le release GitHub: {e}"
-        )
+        print(f"[ERRORE GITHUB] {e}")
         return None
 
     assets = release_data.get("assets", [])
     if not assets:
-        messagebox.showinfo(
-            "Aggiornamento",
-            "Nessun asset trovato nell'ultima release GitHub."
-        )
         return []
 
     scaricati = []
     for asset in assets:
-        try:
-            was_downloaded, _ = scarica_asset(asset, cartella_app)
-            if was_downloaded:
-                scaricati.append(asset.get("name"))
-        except Exception as e:
-            messagebox.showerror(
-                "Errore download asset",
-                f"Impossibile scaricare {asset.get('name', 'asset sconosciuto')}: {e}"
-            )
-            return None
+        if asset.get("name") == "ControlloStampanti.zip":
+            try:
+                was_downloaded, downloaded_name = scarica_asset(asset, cartella_app)
+                if was_downloaded:
+                    scaricati.append(downloaded_name)
+            except Exception as e:
+                print(f"[ERRORE DOWNLOAD] {e}")
+                return None
 
     return scaricati
 

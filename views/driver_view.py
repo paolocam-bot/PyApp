@@ -51,6 +51,7 @@ class DriverView(ctk.CTkFrame):
         self.label_sottotitolo.grid(row=1, column=0, padx=20, pady=(0, 20), sticky="ew")
 
         # Configurazione comune per i bottoni per garantire dimensioni e stile identici
+        # Configurazione comune per i bottoni
         STILE_BOTTONI = {
             "font": ("Arial", 14, "bold"),
             "height": 45,
@@ -60,42 +61,7 @@ class DriverView(ctk.CTkFrame):
             "pady": 10
         }
 
-        # --- BOTTONE 1: PULIZIA SPOOLER ---
-        self.btn_spooler = ctk.CTkButton(
-            self,
-            text="Sblocca e Pulisci Spooler Stampa",
-            font=STILE_BOTTONI["font"],
-            height=STILE_BOTTONI["height"],
-            width=STILE_BOTTONI["width"],
-            command=lambda: self.controller.cmd_pulizia_spooler_stampa() if self.controller else None
-        )
-        self.btn_spooler.grid(row=2, column=0, padx=STILE_BOTTONI["padx"], pady=STILE_BOTTONI["pady"], sticky=STILE_BOTTONI["sticky"])
-
-        # --- BOTTONE 2: REFRESH INTERNET ---
-        self.btn_refresh_rete = ctk.CTkButton(
-            self,
-            text="Ripristina Connessione Internet",
-            font=STILE_BOTTONI["font"],
-            height=STILE_BOTTONI["height"],
-            width=STILE_BOTTONI["width"],
-            command=lambda: self.controller.cmd_refresh_internet_sicuro() if self.controller else None
-        )
-        self.btn_refresh_rete.grid(row=3, column=0, padx=STILE_BOTTONI["padx"], pady=STILE_BOTTONI["pady"], sticky=STILE_BOTTONI["sticky"])
-
-        # --- BOTTONE 3: INPUT HARDWARE (Tastiera/Mouse) ---
-        self.btn_input = ctk.CTkButton(
-            self, 
-            text="Sblocca Tastiera o Mouse Bloccati", 
-            font=STILE_BOTTONI["font"],
-            fg_color="#2b712b", 
-            hover_color="#1e4e1e",
-            height=STILE_BOTTONI["height"],
-            width=STILE_BOTTONI["width"],
-            command=lambda: self.controller.installa_driver_zebra() if self.controller else None # Cambia con la funzione hardware corretta se necessario
-        )
-        self.btn_input.grid(row=4, column=0, padx=STILE_BOTTONI["padx"], pady=STILE_BOTTONI["pady"], sticky=STILE_BOTTONI["sticky"])
-
-        # --- BOTTONE 4: AGGIORNAMENTO ---
+        # --- BOTTONE 1: AGGIORNAMENTO (Ora in riga 2 - PRIMO) ---
         self.btn_aggiornamento = ctk.CTkButton(
             self,
             text="🔄 Aggiornamento",
@@ -106,4 +72,46 @@ class DriverView(ctk.CTkFrame):
             width=STILE_BOTTONI["width"],
             command=lambda: self.controller.aggiorna_app() if self.controller else None
         )
-        self.btn_aggiornamento.grid(row=5, column=0, padx=STILE_BOTTONI["padx"], pady=STILE_BOTTONI["pady"], sticky=STILE_BOTTONI["sticky"])
+        # Cambiato row=5 in row=2
+        self.btn_aggiornamento.grid(row=2, column=0, padx=STILE_BOTTONI["padx"], pady=STILE_BOTTONI["pady"], sticky=STILE_BOTTONI["sticky"])
+
+        # --- BOTTONE 2: INPUT HARDWARE (Ora in riga 3 - SECONDO) ---
+        self.btn_input = ctk.CTkButton(
+            self, 
+            text="Sblocca Tastiera o Mouse Bloccati", 
+            font=STILE_BOTTONI["font"],
+            fg_color="#2b712b", 
+            hover_color="#1e4e1e",
+            height=STILE_BOTTONI["height"],
+            width=STILE_BOTTONI["width"],
+            command=lambda: self.controller.installa_driver_zebra() if self.controller else None
+        )
+        # Cambiato row=4 in row=3
+        self.btn_input.grid(row=3, column=0, padx=STILE_BOTTONI["padx"], pady=STILE_BOTTONI["pady"], sticky=STILE_BOTTONI["sticky"])
+
+        # --- BOTTONE 3: PULIZIA SPOOLER (Spostato in riga 4) ---
+        self.btn_spooler = ctk.CTkButton(
+            self,
+            text="Sblocca e Pulisci Spooler Stampa",
+            font=STILE_BOTTONI["font"],
+            height=STILE_BOTTONI["height"],
+            width=STILE_BOTTONI["width"],
+            command=lambda: self.controller.cmd_pulizia_spooler_stampa() if self.controller else None
+        )
+        # Cambiato row=2 in row=4
+        self.btn_spooler.grid(row=4, column=0, padx=STILE_BOTTONI["padx"], pady=STILE_BOTTONI["pady"], sticky=STILE_BOTTONI["sticky"])
+
+        # --- BOTTONE 4: INTERNET (Spostato in riga 5) ---
+        self.btn_refresh_rete = ctk.CTkButton(
+            self,
+            text="Ripristina Connessione Internet",
+            font=STILE_BOTTONI["font"],
+            height=STILE_BOTTONI["height"],
+            width=STILE_BOTTONI["width"],
+            command=lambda: self.controller.cmd_refresh_internet_sicuro() if self.controller else None
+        )
+        # Cambiato row=3 in row=5
+        self.btn_refresh_rete.grid(row=5, column=0, padx=STILE_BOTTONI["padx"], pady=STILE_BOTTONI["pady"], sticky=STILE_BOTTONI["sticky"])
+
+        
+       

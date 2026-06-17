@@ -9,7 +9,7 @@ def main():
     app_temporanea.withdraw() # Nasconde la finestra principale vuota
 
     # Impostiamo la password corretta
-    PASSWORD_CORRETTA = "paolo98"
+    PASSWORD_CORRETTA = "gdvstampanti"
 
     # Mostriamo il popup di richiesta password
     dialogo = ctk.CTkInputDialog(
@@ -37,3 +37,32 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+def controlla_aggiornamenti_silenzioso():
+    print("[AGGIORNAMENTO] Controllo release GitHub all'avvio...")
+    
+    scaricati = scarica_asset_mancanti()
+    
+    if scaricati is None:
+        print("[AGGIORNAMENTO] Errore di rete o GitHub. Avvio normale.")
+        return
+
+    # Se lo zip temporaneo è stato scaricato con successo
+    if scaricati and "ControlloStampanti_nuovo.zip" in scaricati:
+        cartella_app = get_app_base_dir()
+        percorso_bat = os.path.join(cartella_app, "scripts", "aggiornamento.bat")
+        
+        if os.path.exists(percorso_bat):
+            print("[AGGIORNAMENTO] Nuovo pacchetto trovato! Lancio lo script .bat...")
+            try:
+                import subprocess
+                subprocess.Popen(
+                    ["powershell", "-Command", f"Start-Process '{percorso_bat}' -Verb RunAs"],
+                    shell=True,
+                )
+                # CHIUSURA IMMEDIATA: Sblocca ControlloStampanti.exe per consentire la sovrascrittura
+                sys.exit(0)
+            except Exception as e:
+                print(f"[ERRORE AGGIORNAMENTO] Impossibile avviare il file .bat: {e}")
+        else:
+            print(f"[ERRORE AGGIORNAMENTO] Script .bat non trovato in: {percorso_bat}")

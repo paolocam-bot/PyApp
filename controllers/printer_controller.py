@@ -313,12 +313,12 @@ class PrinterManagerController:
                 "^XA^LL240^PW320"
                 "^FO10,10^GB300,220,4^FS"
                 "^FO10,50^A0N,30,30^FB300,3,,C"
-                "^FDBuon lavoro\&da paolo\&:P^FS^XZ"
+                "^FDBuon lavoro\&dalla sede\& GDV^FS^XZ"
     )
         else:
             # FUSTELLA GRANDE: Margine 40, Larghezza rettangolo 480 -> Fine rettangolo a 520.
             # TESTO: Parte a 40 (preciso con la fustella) e lo facciamo largo 480 (^FB480).
-            stringa_zpl = "^XA^FO40,40^GB480,720,4^FS^FO40,280^A0N,55,55^FB480,3,,C^FDBuon lavoro\&da paolo\&:P^FS^XZ"
+            stringa_zpl = "^XA^FO40,40^GB480,720,4^FS^FO40,280^A0N,55,55^FB480,3,,C^FDBuon lavoro\&dalla sede\& GDV^FS^XZ"
 
         if tipo == "USB":
             try:

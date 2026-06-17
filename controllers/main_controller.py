@@ -247,7 +247,11 @@ class HelpDeskController:
         messagebox.showinfo("HardwareHero", "Ripristino completato!\nLe code 'ZEBRA' e 'GARANZIE' sono state configurate.")
 
     def aggiorna_app(self):
-        launcher_aggiorna_app()
+        try:
+            # Usa l'istanza di PrinterManagerController per avviare l'aggiornamento
+            self.printer_manager.aggiorna_app()
+        except Exception as e:
+            messagebox.showerror("Errore aggiornamento", f"Impossibile avviare l'aggiornamento: {e}")
 
     def ripristina_input_hardware(self):
         cartella_root = os.path.dirname(os.path.abspath(sys.argv[0]))

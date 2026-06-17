@@ -1,0 +1,46 @@
+[FileInfo]
+Base=ZEBT3842
+Name=ZDesigner ZM600 200 dpi (EPL)
+
+[Defaults]
+PageWidth=762
+PageHeight=508
+Speed=150
+Darkness=10
+MediaType=1
+HDPI=203
+VDPI=203
+MCSlotType1=8
+MCSlotType2=0
+MCSlotType3=0
+MCSlotType4=0
+MCSlotSize1=1024
+MCSlotSize2=0
+MCSlotSize3=0
+MCSlotSize4=0
+Switch7=0
+
+[ConstParams]
+PageOffset=0
+SpeedUnit="mm/s"
+MaxMediaWidth=0
+FixedHorzUA=0
+HorzUAMode=0
+RFIDSupport=0
+SpeedLimits=50,75,100,125,150,179,205
+DarknessLimits=0..15
+MaxWidth=1680
+MaxHeight=26670
+MinWidth=508
+MinHeight=165
+UseRibbonSaver=1
+CutEnabled=2
+
+[MemoryCards]
+MCSlot1=""Internal Memory",1024,8"
+MCSlot2=""Internal Flash",1024,2,EPLDL,EPLDL,"
+MCSlot3=""",0,0"
+MCSlot4=""",0,0"
+
+[ToolInfo]
+Tool0=ToolsEPL.dll
